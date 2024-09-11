@@ -1,2 +1,37 @@
-- name: Ansible ping module
-  ansible.builtin.ping:
+# Commented out Ansible ping module
+#- name: Ansible ping module
+#  ansible.builtin.ping:
+
+# Create user juri
+- name: Create juri user
+  ansible.builtin.user:
+    name: juri
+    state: present
+    shell: /bin/bash
+
+# Set up SSH key for juri from GitHub
+- name: Add GitHub public key for juri
+  ansible.builtin.authorized_key:
+    user: juri
+    state: present
+    key: https://github.com/hudolejev.keys
+
+# Create user roman
+- name: Create roman user
+  ansible.builtin.user:
+    name: roman
+    state: present
+    shell: /bin/bash
+
+# Set up SSH key for roman from GitHub
+- name: Add GitHub public key for roman
+  ansible.builtin.authorized_key:
+    user: roman
+    state: present
+    key: https://github.com/romankuchin.keys
+
+# Update APT cache
+- name: Update APT cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 86400
