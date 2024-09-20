@@ -1,6 +1,8 @@
 ---
-  - name: Initial setup
-    hosts: all
-    roles:
-      - init
-      - nginx
+- name: Initial setup
+  hosts: web_servers
+  roles:
+    - init
+    - agama
+    - uwsgi
+    - nginx

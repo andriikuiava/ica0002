@@ -1,0 +1,25 @@
+---
+# Install uWSGI packages
+- name: Install uWSGI packages
+  ansible.builtin.apt:
+    name:
+      - uwsgi
+      - uwsgi-plugin-python3
+    state: present
+
+# Copy uWSGI configuration for AGAMA
+- name: Add uWSGI config for AGAMA
+  ansible.builtin.copy:
+    src: files/agama.ini
+    dest: /etc/uwsgi/apps-enabled/agama.ini
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart uWSGI
+
+# Ensure uWSGI service is running
+- name: Ensure uWSGI service is running and enabled
+  ansible.builtin.service:
+    name: uwsgi
+    state: started
+    enabled: true

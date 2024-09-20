@@ -1,0 +1,37 @@
+# Create agama user
+- name: Create agama user
+  ansible.builtin.user:
+    name: agama
+    state: present
+    shell: /bin/bash
+
+# Create /opt/agama directory
+- name: Create /opt/agama directory
+  ansible.builtin.file:
+    path: /opt/agama
+    state: directory
+    owner: agama
+    group: agama
+    mode: '0755'
+
+# Install dependencies
+- name: Install AGAMA dependencies
+  ansible.builtin.apt:
+    name:
+      - python3
+      - python3-pip
+      - sqlite3
+      - python3-flask
+      - python3-sqlalchemy
+      - python3-flask-sqlalchemy
+    state: present
+    update_cache: yes
+
+# Download AGAMA application
+- name: Download AGAMA app
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+    dest: /opt/agama
+    owner: agama
+    group: agama
+    mode: '0755'
