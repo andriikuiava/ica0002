@@ -4,15 +4,15 @@
     name: nginx
     state: present
 
-# Copy Nginx configuration
-- name: Copy Nginx config
+# Copy Nginx configuration for AGAMA
+- name: Copy Nginx config to sites-enabled
   ansible.builtin.copy:
-    src: files/default
+    src: roles/nginx/files/default
     dest: /etc/nginx/sites-enabled/default
   notify: Restart Nginx
 
-# Ensure Nginx service is running
-- name: Ensure Nginx service is running and enabled
+# Ensure nginx service is running and enabled
+- name: Ensure Nginx service is running
   ansible.builtin.service:
     name: nginx
     state: started
