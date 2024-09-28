@@ -23,6 +23,7 @@
       - python3-venv
       - python3-flask
       - python3-flask-sqlalchemy
+      - python3-pymysql
     state: present
     update_cache: yes
 

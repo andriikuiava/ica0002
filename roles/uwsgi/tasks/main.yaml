@@ -7,10 +7,10 @@
       - uwsgi-plugin-python3
     state: present
 
-# Step 2: Copy uWSGI configuration for AGAMA
+# Step 2: Copy uWSGI configuration for AGAMA using the template
 - name: Copy uWSGI config for AGAMA
-  ansible.builtin.copy:
-    src: files/agama.ini
+  ansible.builtin.template:
+    src: templates/agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
   notify: Restart uWSGI
 
