@@ -1,0 +1,23 @@
+---
+# Install MySQL server
+- name: Install MySQL server
+  ansible.builtin.apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+
+# Ensure MySQL service is started and enabled
+- name: Ensure MySQL service is running
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: true
+
+# Create override configuration for MySQL to bind to 0.0.0.0
+- name: Create MySQL override configuration
+  ansible.builtin.copy:
+    dest: /etc/mysql/mysql.conf.d/override.cnf
+    content: |
+      [mysqld]
+      bind-address = 0.0.0.0
+  notify: Restart MySQL
