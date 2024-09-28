@@ -6,6 +6,12 @@
     state: present
     update_cache: yes
 
+# Install PyMySQL for MySQL connectivity
+- name: Install PyMySQL
+  ansible.builtin.apt:
+    name: python3-pymysql
+    state: present
+
 # Ensure MySQL service is started and enabled
 - name: Ensure MySQL service is running
   ansible.builtin.service:
@@ -21,3 +27,18 @@
       [mysqld]
       bind-address = 0.0.0.0
   notify: Restart MySQL
+
+# Create MySQL database
+- name: MySQL database
+  community.mysql.mysql_db:
+    name: "{{ mysql_database }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+# Create MySQL user for the web application
+- name: MySQL user
+  community.mysql.mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    host: "%"
+    priv: "{{ mysql_database }}.*:ALL"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
