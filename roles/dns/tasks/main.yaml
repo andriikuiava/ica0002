@@ -1,0 +1,13 @@
+---
+# Install bind9 package
+- name: Install Bind9 DNS Server
+  ansible.builtin.apt:
+    name: bind9
+    state: present
+
+# Ensure Bind9 service is running and enabled at boot
+- name: Ensure Bind9 is running and enabled
+  ansible.builtin.service:
+    name: bind9
+    state: started
+    enabled: true
