@@ -1,0 +1,15 @@
+$TTL 604800
+@   IN  SOA ns.megacoolproject.io. admin.megacoolproject.io. (
+            2         ; Serial
+        604800         ; Refresh
+         86400         ; Retry
+       2419200         ; Expire
+        604800 )       ; Negative Cache TTL
+
+; Name servers
+@   IN  NS  ns.megacoolproject.io.
+
+; A records for VMs
+ns  IN  A   {{ hostvars['andriikuiava-2']['ansible_default_ipv4']['address'] }}
+andriikuiava-1  IN  A   {{ hostvars['andriikuiava-1']['ansible_default_ipv4']['address'] }}
+andriikuiava-2  IN  A   {{ hostvars['andriikuiava-2']['ansible_default_ipv4']['address'] }}

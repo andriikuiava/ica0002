@@ -1,4 +1,4 @@
-mysql_host: 192.168.43.54
+mysql_host: andriikuiava-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -10,6 +10,9 @@ mysql_password: !vault |
   65303432643035643764313861653431393238383237303166633135636433336263663033623664
   6364326231396132326339316237396264636564643137356239
 dns_forwarders:
-  - "1.1.1.1"
-  - "8.8.8.8"
-  - "9.9.9.9"
+  - 1.1.1.1
+  - 8.8.8.8
+  - 9.9.9.9
+allowed_networks:
+  - 192.168.42.0/23
+  - 127.0.0.0/8
