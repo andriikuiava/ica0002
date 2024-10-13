@@ -9,6 +9,7 @@
   roles:
     - mysql
     - bind
+    - prometheus
 
 - name: Web server
   hosts: web_servers
