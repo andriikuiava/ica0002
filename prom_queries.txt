@@ -1,0 +1,9 @@
+# Prometheus Queries
+
+# Memory Consumption
+# Percentage of Memory Used
+(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100
+
+# Average CPU Load
+# Average CPU Usage over last 5 minutes for each VM
+avg(rate(node_cpu_seconds_total[5m])) by (instance)

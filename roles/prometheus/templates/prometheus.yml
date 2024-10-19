@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: prometheus
+    metrics_path: /prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: linux
+    static_configs:
+      - targets: [{% for host in groups['all'] %}'{{ host }}:9100'{{", " if not loop.last else ""}}{% endfor %}]

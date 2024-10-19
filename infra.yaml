@@ -4,17 +4,25 @@
   roles:
     - init
 
-- name: Database server
+- name: DNS Servers
+  hosts: dns_servers
+  roles:
+    - bind
+
+- name: Prometheus Servers
+  hosts: prometheus_servers
+  roles:
+    - prometheus
+
+- name: Database Server
   hosts: db_servers
   roles:
     - mysql
-    - bind
-    - prometheus
 
-- name: Web server
+- name: Web Servers
   hosts: web_servers
   roles:
-    - dns
-    - agama
     - nginx
+    - agama
     - uwsgi
+
