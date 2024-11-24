@@ -2,3 +2,9 @@
   ansible.builtin.service:
     name: nginx
     state: restarted
+
+- name: Reload Systemd and Restart Nginx Exporter
+  ansible.builtin.systemd:
+    name: prometheus-nginx-exporter
+    state: restarted
+    daemon_reload: yes

@@ -17,3 +17,32 @@
     name: nginx
     state: started
     enabled: true
+
+# Install Nginx exporter
+- name: Install Nginx exporter
+  ansible.builtin.apt:
+    name: prometheus-nginx-exporter
+    state: present
+    update_cache: yes
+
+# Add scrape-uri to prometheus-nginx-exporter systemd service
+- name: Add scrape-uri to prometheus-nginx-exporter systemd service
+  ansible.builtin.lineinfile:
+    path: /lib/systemd/system/prometheus-nginx-exporter.service
+    regexp: "^ExecStart=.*$"
+    line: "ExecStart=/usr/bin/prometheus-nginx-exporter -nginx.scrape-uri http://localhost/nginx_status"
+    backup: yes
+  notify: Reload Systemd and Restart Nginx Exporter
+
+# Reload systemd daemon
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  notify: Restart Nginx Exporter
+
+# Make sure Nginx exporter is running
+- name: Make sure Nginx exporter is running
+  ansible.builtin.service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: yes

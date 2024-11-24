@@ -14,7 +14,7 @@
 
 - name: Configure Prometheus
   ansible.builtin.template:
-    src: "templates/prometheus.yml"
+    src: "templates/prometheus.yml.j2"
     dest: "/etc/prometheus/prometheus.yml"
   notify:
     - Stop Prometheus

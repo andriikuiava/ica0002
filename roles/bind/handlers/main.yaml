@@ -6,3 +6,7 @@
 
 - name: Reload Bind9
   ansible.builtin.command: rndc reload
+
+- name: Reload Systemd
+  ansible.builtin.systemd:
+      daemon_reload: yes

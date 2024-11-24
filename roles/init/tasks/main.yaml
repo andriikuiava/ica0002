@@ -59,3 +59,16 @@
     group: root
     mode: '0644'
 
+# Install Prometheus Node Exporter
+- name: Install Prometheus Node Exporter
+  ansible.builtin.apt:
+    name: prometheus-node-exporter
+    state: present
+    update_cache: yes
+
+# Ensure Prometheus Node Exporter is running and enabled
+- name: Ensure Prometheus Node Exporter service is running
+  ansible.builtin.service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: true
