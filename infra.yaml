@@ -13,6 +13,7 @@
   hosts: prometheus_servers
   roles:
     - prometheus
+    - grafana
 
 - name: Database Server
   hosts: db_servers
