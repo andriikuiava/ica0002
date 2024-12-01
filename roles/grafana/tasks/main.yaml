@@ -26,18 +26,19 @@
     dest: /etc/grafana/grafana.ini
   notify: Restart Grafana
 
-- name: Provision Prometheus datasource
+- name: Update Grafana Datasource Configuration
   ansible.builtin.copy:
     src: datasource.yaml
     dest: /etc/grafana/provisioning/datasources/datasource.yaml
     owner: grafana
     group: grafana
     mode: "0644"
+  notify: Restart Grafana
 
-- name: Configure Grafana dashboards.yaml
+- name: Update Grafana Dashboard Configuration
   ansible.builtin.copy:
-    src: dashboards.yaml
-    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
+    src: main.json
+    dest: /etc/grafana/provisioning/dashboards/main.json
     owner: grafana
     group: grafana
     mode: "0644"

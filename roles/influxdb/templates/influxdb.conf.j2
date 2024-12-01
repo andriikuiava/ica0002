@@ -1,0 +1,13 @@
+[meta]
+  dir = "/var/lib/influxdb/meta"
+
+[data]
+  dir = "/var/lib/influxdb/data"
+  wal-dir = "/var/lib/influxdb/wal"
+  query-log-enabled = false
+
+[http]
+  enabled = true
+  bind-address = ":8086"
+  log-enabled = false
+  write-tracing = false

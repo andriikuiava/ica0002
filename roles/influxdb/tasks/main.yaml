@@ -1,0 +1,15 @@
+---
+- name: Download InfluxDB .deb package
+  ansible.builtin.get_url:
+    url: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
+    dest: /tmp/influxdb.deb
+
+- name: Install InfluxDB .deb package
+  ansible.builtin.command:
+    cmd: "dpkg -i /tmp/influxdb.deb"
+
+- name: Ensure InfluxDB is enabled and started
+  ansible.builtin.service:
+    name: influxdb
+    enabled: true
+    state: started

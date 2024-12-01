@@ -1,0 +1,54 @@
+---
+# Install fping
+- name: Install fping
+  ansible.builtin.apt:
+    name: fping
+    state: present
+# Copy the agama-client script
+- name: Copy agama-client script to /usr/local/bin
+  ansible.builtin.copy:
+    src: "files/agama_client"
+    dest: /usr/local/bin/agama-client
+    owner: root
+    group: root
+    mode: "0755"
+
+# Create agama-client user
+- name: Create agama-client user
+  ansible.builtin.user:
+    name: agama-client
+    system: yes
+    create_home: no
+
+# Copy agama-client configuration
+- name: Create directory for agama-client configuration
+  ansible.builtin.file:
+    path: /etc/agama-client
+    state: directory
+    owner: agama-client
+    group: agama-client
+    mode: "0755"
+
+- name: Copy agama-client configuration file
+  ansible.builtin.copy:
+    src: "files/agama_client.conf"
+    dest: /etc/agama-client/agama-client.conf
+    owner: agama-client
+    group: agama-client
+    mode: "0644"
+
+# Set up agama-client systemd service
+- name: Copy agama-client systemd service file
+  ansible.builtin.copy:
+    src: "files/agama-client.service"
+    dest: /etc/systemd/system/agama-client.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload Systemd
+
+- name: Enable and start agama-client service
+  ansible.builtin.systemd:
+    name: agama-client
+    enabled: yes
+    state: started

@@ -5,3 +5,11 @@ datasources:
     url: http://localhost:9090/prometheus
     access: proxy
     isDefault: true
+
+  - name: AgamaDB
+    type: influxdb
+    url: http://localhost:8086
+    access: proxy
+    database: example
+#    user: <influxdb_user>
+#    password: <influxdb_password>

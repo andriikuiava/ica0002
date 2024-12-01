@@ -14,6 +14,8 @@
   roles:
     - prometheus
     - grafana
+    - influxdb
+    - agama-client
 
 - name: Database Server
   hosts: db_servers
