@@ -79,6 +79,7 @@
     state: present
     update_cache: yes
 
+# Copy rsyslog configuration for Telegraf
 - name: Copy rsyslog configuration for Telegraf
   ansible.builtin.template:
     src: 50-telegraf.conf.j2
@@ -87,8 +88,83 @@
     group: root
     mode: '0644'
 
+# Restart rsyslog
 - name: Restart rsyslog
   ansible.builtin.service:
     name: rsyslog
     state: restarted
     enabled: yes
+
+# Ensure backup user exists with the correct home directory
+- name: Ensure backup user exists with the correct home directory
+  ansible.builtin.user:
+    name: backup
+    home: /home/backup
+    shell: /bin/bash
+    state: present
+    create_home: yes
+
+# Ensure .ssh directory exists for backup user
+- name: Ensure .ssh directory exists for backup user
+  ansible.builtin.file:
+    path: /home/backup/.ssh
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0700'
+
+# Generate SSH key pair for backup user
+- name: Generate SSH key pair for backup user
+  ansible.builtin.openssh_keypair:
+    path: /home/backup/.ssh/id_rsa
+    owner: backup
+    group: backup
+    mode: '0600'
+    type: rsa
+    size: 2048
+  register: ssh_keypair
+
+# Copy the public key to the control node
+- name: Set permissions on the public key file
+  ansible.builtin.file:
+    path: /home/backup/.ssh/id_rsa.pub
+    owner: backup
+    group: backup
+    mode: '0644'
+
+# Ensure known_hosts file exists for backup user
+- name: Ensure known_hosts file exists for backup user
+  ansible.builtin.template:
+    src: known-hosts.j2
+    dest: /home/backup/.ssh/known_hosts
+    owner: backup
+    group: backup
+    mode: '0644'
+
+# Ensure backup user can access backup server without prompts
+- name: Ensure backup user can access backup server without prompts
+  ansible.builtin.command:
+    cmd: ssh-keyscan -t ed25519 {{ backup_server_ip }}
+  register: ssh_keyscan_result
+  changed_when: false
+
+# Add backup server to known_hosts
+- name: Add backup server to known_hosts
+  ansible.builtin.template:
+    src: known-hosts.j2
+    dest: /home/backup/.ssh/known_hosts
+    owner: backup
+    group: backup
+    mode: '0644'
+
+# Set permissions for backup SSH keys
+- name: Set permissions for backup SSH keys
+  ansible.builtin.file:
+    path: "/home/backup/.ssh/{{ item }}"
+    state: file
+    owner: backup
+    group: backup
+    mode: "{{ '0600' if item == 'id_rsa' else '0644' }}"
+  with_items:
+    - id_rsa
+    - id_rsa.pub

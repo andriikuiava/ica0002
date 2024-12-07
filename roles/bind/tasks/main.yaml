@@ -95,3 +95,9 @@
     name: bind_exporter
     state: started
     enabled: yes
+
+# Restart Bind9 service
+- name: Reload Bind9
+  ansible.builtin.service:
+    name: bind9
+    state: reloaded
