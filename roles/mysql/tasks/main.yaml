@@ -19,6 +19,14 @@
     state: started
     enabled: true
 
+- name: Wait for MySQL to be ready
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: 3306
+    delay: 5
+    timeout: 30
+    state: started
+
 # Create override configuration for MySQL to bind to 0.0.0.0
 - name: Create MySQL override configuration
   ansible.builtin.copy:
@@ -69,10 +77,11 @@
     owner: prometheus
     group: prometheus
     mode: "0600"
-
-# Create override configuration for MySQL exporter
-- name: Restart MySQL exporter if credentials change
-  ansible.builtin.systemd:
-    name: prometheus-mysqld-exporter
-    state: restarted
   notify: Restart MySQL Exporter
+
+## Create override configuration for MySQL exporter
+#- name: Restart MySQL exporter if credentials change
+#  ansible.builtin.systemd:
+#    name: prometheus-mysqld-exporter
+#    state: restarted
+#  notify: Restart MySQL Exporter

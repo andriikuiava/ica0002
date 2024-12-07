@@ -1,0 +1,19 @@
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  debug = false
+  quiet = false
+  omit_hostname = false
+
+[[inputs.syslog]]
+  server = "udp://:6514"
+  best_effort = true
+
+[[outputs.influxdb]]
+  urls = ["http://localhost:8086"]
+  database = "syslog"

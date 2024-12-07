@@ -23,7 +23,7 @@
 # Copy agama-client configuration
 - name: Create directory for agama-client configuration
   ansible.builtin.file:
-    path: /etc/agama-client
+    path: /etc/agama_client
     state: directory
     owner: agama-client
     group: agama-client
@@ -32,7 +32,7 @@
 - name: Copy agama-client configuration file
   ansible.builtin.copy:
     src: "files/agama_client.conf"
-    dest: /etc/agama-client/agama-client.conf
+    dest: /etc/agama_client/agama_client.conf
     owner: agama-client
     group: agama-client
     mode: "0644"

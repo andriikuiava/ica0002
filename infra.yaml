@@ -16,6 +16,8 @@
     - grafana
     - influxdb
     - agama-client
+  tags:
+    - prometheus
 
 - name: Database Server
   hosts: db_servers

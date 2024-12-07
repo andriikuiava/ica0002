@@ -13,3 +13,47 @@
     name: influxdb
     enabled: true
     state: started
+
+- name: Install Telegraf
+  ansible.builtin.apt:
+    name: telegraf
+    state: present
+    update_cache: yes
+
+- name: Configure Telegraf
+  ansible.builtin.template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Telegraf
+
+- name: Ensure Telegraf is running and enabled
+  ansible.builtin.systemd:
+    name: telegraf
+    state: started
+    enabled: true
+
+- name: Restart Telegraf
+  ansible.builtin.systemd:
+    name: telegraf
+    state: restarted
+  notify: Restart Telegraf
+
+- name: Download InfluxDB Stats Exporter binary
+  ansible.builtin.get_url:
+    url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_386
+    dest: /usr/local/bin/influxdb_stats_exporter
+    mode: "0755"
+
+- name: Create systemd service for InfluxDB Stats Exporter
+  ansible.builtin.template:
+    src: prometheus-influxdb-stats-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload Systemd
+    - Restart InfluxDB Stats Exporter

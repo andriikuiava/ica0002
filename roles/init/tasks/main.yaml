@@ -72,3 +72,23 @@
     name: prometheus-node-exporter
     state: started
     enabled: true
+
+- name: Ensure rsyslog is installed
+  ansible.builtin.apt:
+    name: rsyslog
+    state: present
+    update_cache: yes
+
+- name: Copy rsyslog configuration for Telegraf
+  ansible.builtin.template:
+    src: 50-telegraf.conf.j2
+    dest: /etc/rsyslog.d/50-telegraf.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Restart rsyslog
+  ansible.builtin.service:
+    name: rsyslog
+    state: restarted
+    enabled: yes

@@ -35,10 +35,10 @@
     mode: "0644"
   notify: Restart Grafana
 
-- name: Update Grafana Dashboard Configuration
+- name: Configure Grafana dashboards.yaml
   ansible.builtin.copy:
-    src: main.json
-    dest: /etc/grafana/provisioning/dashboards/main.json
+    src: dashboards.yaml
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
     owner: grafana
     group: grafana
     mode: "0644"
@@ -51,3 +51,13 @@
     owner: grafana
     group: grafana
     mode: "0644"
+
+- name: Add Syslog Dashboard to Grafana
+  ansible.builtin.copy:
+    src: syslog.json
+    dest: /etc/grafana/provisioning/dashboards/syslog-dashboard.json
+    owner: grafana
+    group: grafana
+    mode: "0644"
+  notify:
+    - Restart Grafana
