@@ -69,15 +69,73 @@
 # Configure MySQL exporter credentials
 - name: Configure MySQL exporter credentials
   ansible.builtin.copy:
-    dest: /var/lib/prometheus/.my.cnf
     content: |
       [client]
       user=mysql_exporter
       password={{ mysql_exporter_password }}
+    dest: /var/lib/prometheus/.my.cnf
     owner: prometheus
     group: prometheus
     mode: "0600"
   notify: Restart MySQL Exporter
+
+# Ensure /home/backup/mysql directory exists
+- name: Ensure /home/backup/mysql directory exists
+  ansible.builtin.file:
+    path: /home/backup/mysql
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'
+
+# Create MySQL backup user
+- name: Create MySQL backup user
+  community.mysql.mysql_user:
+    name: backup
+    host: '%'
+    password: "{{ mysql_backup_password }}"
+    priv: "agama.*:LOCK TABLES,SELECT"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    state: present
+  become: true
+  become_user: root
+
+# Create MySQL client configuration file for backup user
+- name: Create MySQL client configuration file for backup user
+  ansible.builtin.copy:
+    dest: /home/backup/.my.cnf
+    content: |
+      [client]
+      user=backup
+      password={{ mysql_backup_password }}
+      [mysqldump]
+      no_tablespaces
+    owner: backup
+    group: backup
+    mode: '0600'
+
+# Ensure /home/backup/mysql directory exists
+- name: Ensure /home/backup/mysql directory exists
+  ansible.builtin.file:
+    path: /home/backup/mysql
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'
+
+# Create Cron job for MySQL backups
+- name: Create Cron job for MySQL backups
+  ansible.builtin.copy:
+    content: |
+      PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+      {{ mysql_backup_schedule }} backup mysqldump agama > /home/backup/mysql/agama.sql
+    dest: /etc/cron.d/mysql-backup
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Cron
+
+
 
 ## Create override configuration for MySQL exporter
 #- name: Restart MySQL exporter if credentials change

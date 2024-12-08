@@ -57,3 +57,11 @@
   notify:
     - Reload Systemd
     - Restart InfluxDB Stats Exporter
+
+- name: Ensure /home/backup/influxdb directory exists
+  ansible.builtin.file:
+    path: /home/backup/influxdb
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'

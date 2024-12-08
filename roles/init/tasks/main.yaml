@@ -168,3 +168,19 @@
   with_items:
     - id_rsa
     - id_rsa.pub
+
+# Ensure /home/backup/restore directory exists
+- name: Ensure /home/backup/restore directory exists
+  ansible.builtin.file:
+    path: /home/backup/restore
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'
+
+# Ensure duplicity is installed
+- name: Ensure duplicity is installed
+  ansible.builtin.apt:
+    name: duplicity
+    state: present
+    update_cache: yes
