@@ -61,3 +61,13 @@
     mode: "0644"
   notify:
     - Restart Grafana
+
+- name: Add Backup Dashboard to Grafana
+  ansible.builtin.copy:
+    src: backups.json
+    dest: /etc/grafana/provisioning/dashboards/backup-dashboard.json
+    owner: grafana
+    group: grafana
+    mode: "0644"
+  notify:
+    - Restart Grafana

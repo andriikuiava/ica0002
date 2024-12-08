@@ -8,6 +8,10 @@ scrape_configs:
       - targets: ['localhost:9090']
     metrics_path: '/prometheus/metrics'
 
+  - job_name: 'backup_metrics'
+    static_configs:
+      - targets: [{{ backup_domain }}:9111]
+
   # Scrape all VMs
   - job_name: 'linux'
     static_configs:

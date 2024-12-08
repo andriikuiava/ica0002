@@ -65,3 +65,21 @@
     owner: backup
     group: backup
     mode: '0755'
+
+- name: Ensure backup directory exists
+  ansible.builtin.file:
+    path: /home/backup/influxdb
+    state: directory
+    owner: backup
+    group: backup
+    mode: '0755'
+
+- name: Configure InfluxDB backup cron job
+  ansible.builtin.copy:
+    dest: /etc/cron.d/influxdb-backup
+    content: |
+      0 0 * * * backup rm -rf /home/backup/influxdb/*; influxd backup -portable -db telegraf /home/backup/influxdb
+      0 0 * * * backup duplicity --no-encryption full /home/backup/influxdb/ rsync://andriikuiava@{{ backup_domain }}/influxdb
+    owner: root
+    group: root
+    mode: '0644'
