@@ -23,11 +23,15 @@
   hosts: db_servers
   roles:
     - mysql
+  tags:
+    - switchover
 
 - name: Web Servers
   hosts: web_servers
   roles:
-    - nginx
-    - agama
     - uwsgi
+    - agama
+  tags:
+    - switchover
+
 
