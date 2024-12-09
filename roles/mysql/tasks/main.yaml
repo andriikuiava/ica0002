@@ -134,10 +134,12 @@
 - name: Create Cron job for MySQL backups
   ansible.builtin.copy:
     content: |
+      {% if inventory_hostname == mysql_backup_host %}
       PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
       {{ mysql_backup_schedule }} backup mysqldump agama > /home/backup/mysql/agama.sql
       12 0 * * 0  backup  duplicity --no-encryption full /home/backup/mysql/ rsync://andriikuiava@{{ backup_domain }}/mysql
       12 0 * * 1-6  backup  duplicity --no-encryption incremental /home/backup/mysql/ rsync://andriikuiava@{{ backup_domain }}/mysql
+      {% endif %}
     dest: /etc/cron.d/mysql-backup
     owner: root
     group: root
