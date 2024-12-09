@@ -45,6 +45,9 @@
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica
 
 # Create MySQL user for the web application
 - name: MySQL user
@@ -161,9 +164,9 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   delegate_to: "{{ inventory_hostname }}"
   when: inventory_hostname in groups['db_servers']
-
-
-
+  notify:
+    - Reset MySQL source
+    - Reset MySQL replica
 
 
 

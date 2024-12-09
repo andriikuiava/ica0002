@@ -12,3 +12,26 @@
   ansible.builtin.service:
       name: cron
       state: restarted
+
+- name: Reset MySQL source
+  community.mysql.mysql_replication:
+    mode: "{{ item }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  loop:
+    - stopreplica
+    - resetprimary
+  when: inventory_hostname == mysql_host
+
+- name: Reset MySQL replica
+  community.mysql.mysql_replication:
+    mode: "{{ item }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    master_host: "{{ mysql_host }}"
+    master_user: "replication"
+    master_password: "{{ replication_password }}"
+  loop:
+    - stopreplica
+    - changeprimary
+    - resetreplica
+    - startreplica
+  when: inventory_hostname != mysql_host
