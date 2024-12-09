@@ -5,6 +5,7 @@ andriikuiava-2 ansible_host=193.40.156.67 ansible_port=4622 ansible_user=ubuntu
 andriikuiava-1
 
 [db_servers]
+andriikuiava-1
 andriikuiava-2
 
 [dns_servers]

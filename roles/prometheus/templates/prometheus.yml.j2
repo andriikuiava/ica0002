@@ -28,7 +28,7 @@ scrape_configs:
   # MySQL Exporter
   - job_name: 'mysql'
     static_configs:
-      - targets: ['andriikuiava-2:9104']
+      - targets: ['andriikuiava-1:9104', 'andriikuiava-2:9104']
 
   # Nginx Exporter
   - job_name: 'nginx'
