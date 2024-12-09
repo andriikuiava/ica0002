@@ -71,3 +71,13 @@
     mode: "0644"
   notify:
     - Restart Grafana
+
+- name: Add MySQL Dashboard to Grafana
+  ansible.builtin.copy:
+    src: mysql.json
+    dest: /etc/grafana/provisioning/dashboards/mysql.json
+    owner: grafana
+    group: grafana
+    mode: "0644"
+  notify:
+    - Restart Grafana

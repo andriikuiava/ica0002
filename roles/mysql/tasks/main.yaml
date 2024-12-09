@@ -137,6 +137,18 @@
     mode: '0644'
   notify: Restart Cron
 
+# Create MySQL replication user
+- name: Create MySQL replication user
+  community.mysql.mysql_user:
+    name: replication
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    password: "{{ replication_password }}"
+    priv: '*.*:REPLICATION SLAVE'
+    host: '%'
+    state: present
+  register: mysql_replication_user
+
+
 
 
 ## Create override configuration for MySQL exporter
