@@ -29,6 +29,7 @@
 - name: Web Servers
   hosts: web_servers
   roles:
+    - nginx
     - uwsgi
     - agama
   tags:
