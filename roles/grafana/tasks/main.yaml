@@ -1,83 +1,30 @@
-- name: Add Grafana GPG key
-  ansible.builtin.apt_key:
-    url: https://packages.grafana.com/gpg.key
-    state: present
+---
+- name: Create Grafana directories
+  file:
+    path: "/opt/grafana/{{ item }}"
+    state: directory
+  loop:
+    - provisioning/dashboards
+    - provisioning/datasources
 
-- name: Add Grafana repository
-  ansible.builtin.apt_repository:
-    repo: "deb https://packages.grafana.com/oss/deb stable main"
-    state: present
+- name: Copy the config
+  template:
+    src: ../templates/grafana.ini.j2
+    dest: /opt/grafana/grafana.ini
+  no_log: true
+  notify:
+    - Restart Grafana
 
-- name: Install Grafana
-  ansible.builtin.apt:
+- name: Pull Grafana Docker image
+  community.docker.docker_image:
+    name: grafana/grafana
+    source: pull
+
+- name: Start Grafana container
+  docker_container:
     name: grafana
-    state: present
-    update_cache: yes
-
-- name: Ensure Grafana is started and enabled
-  ansible.builtin.systemd:
-    name: grafana-server
+    image: grafana/grafana
     state: started
-    enabled: yes
-
-- name: Configure Grafana.ini file
-  ansible.builtin.template:
-    src: grafana.ini.j2
-    dest: /etc/grafana/grafana.ini
-  notify: Restart Grafana
-
-- name: Update Grafana Datasource Configuration
-  ansible.builtin.copy:
-    src: datasource.yaml
-    dest: /etc/grafana/provisioning/datasources/datasource.yaml
-    owner: grafana
-    group: grafana
-    mode: "0644"
-  notify: Restart Grafana
-
-- name: Configure Grafana dashboards.yaml
-  ansible.builtin.copy:
-    src: dashboards.yaml
-    dest: /etc/grafana/provisioning/dashboards/dashboards.yaml
-    owner: grafana
-    group: grafana
-    mode: "0644"
-  notify: Restart Grafana
-
-- name: Provision Main Dashboard
-  ansible.builtin.copy:
-    src: main.json
-    dest: /etc/grafana/provisioning/dashboards/main.json
-    owner: grafana
-    group: grafana
-    mode: "0644"
-
-- name: Add Syslog Dashboard to Grafana
-  ansible.builtin.copy:
-    src: syslog.json
-    dest: /etc/grafana/provisioning/dashboards/syslog-dashboard.json
-    owner: grafana
-    group: grafana
-    mode: "0644"
-  notify:
-    - Restart Grafana
-
-- name: Add Backup Dashboard to Grafana
-  ansible.builtin.copy:
-    src: backups.json
-    dest: /etc/grafana/provisioning/dashboards/backup-dashboard.json
-    owner: grafana
-    group: grafana
-    mode: "0644"
-  notify:
-    - Restart Grafana
-
-- name: Add MySQL Dashboard to Grafana
-  ansible.builtin.copy:
-    src: mysql.json
-    dest: /etc/grafana/provisioning/dashboards/mysql.json
-    owner: grafana
-    group: grafana
-    mode: "0644"
-  notify:
-    - Restart Grafana
+    restart_policy: always
+    ports: "3001:3000"
+    volumes: /opt/grafana:/etc/grafana

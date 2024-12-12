@@ -13,10 +13,10 @@
   hosts: prometheus_servers
   roles:
     - prometheus
+    - docker
     - grafana
     - influxdb
     - agama-client
-    - docker
   tags:
     - prometheus
 
