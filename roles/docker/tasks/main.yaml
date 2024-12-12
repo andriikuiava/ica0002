@@ -1,0 +1,16 @@
+---
+- name: Install Docker.io package
+  apt:
+    name: docker.io
+    state: present
+
+- name: Install python3-docker package
+  apt:
+    name: python3-docker
+    state: present
+
+- name: Ensure Docker daemon is running and enabled
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
