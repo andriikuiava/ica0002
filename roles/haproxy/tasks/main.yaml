@@ -1,0 +1,34 @@
+- name: Install haproxy
+  apt:
+    name: haproxy
+    state: present
+
+- name: Copy the Haproxy config
+  template:
+    src: haproxy.cnf.j2
+    dest: /etc/haproxy/haproxy.cfg
+    mode: 0600
+  notify: Restart Haproxy
+
+- name: Start the service
+  service:
+    name: haproxy
+    state: started
+    enabled: true
+
+- name: Install prometheus-haproxy-exporter using APT
+  apt:
+    name: prometheus-haproxy-exporter
+    state: present
+
+- name: Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter
+  template:
+    src: prometheus_haproxy
+    dest: /etc/default/prometheus-haproxy-exporter
+  notify: restart prometheus-haproxy-exporter
+
+- name: Start haproxy exporter
+  service:
+    name: prometheus-haproxy-exporter
+    state: started
+    enabled: yes

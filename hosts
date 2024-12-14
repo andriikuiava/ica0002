@@ -3,6 +3,11 @@ andriikuiava-2 ansible_host=193.40.156.67 ansible_port=42622 ansible_user=ubuntu
 
 [web_servers]
 andriikuiava-1
+andriikuiava-2
+
+[keepalived_servers]
+andriikuiava-1
+andriikuiava-2
 
 [db_servers]
 andriikuiava-1

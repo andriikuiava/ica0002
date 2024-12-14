@@ -1,0 +1,50 @@
+global_defs {
+    enable_script_security
+    script_user root
+}
+
+vrrp_script check_haproxy {                 
+    script "/root/check_script.sh" 
+    weight 20                              
+    interval 1
+    fall 2
+    rise 2               
+}
+
+vrrp_instance VI_1 {
+        state MASTER
+        interface ens3
+        virtual_router_id 51
+        priority 100
+        preempt
+        advert_int 1
+        authentication {
+              auth_type PASS
+              auth_pass {{ auth_pass_keepalived }}
+        }
+        virtual_ipaddress {
+        
+        {% if 'andriikuiava-1' in groups['all'] %}
+        {% set vm = 'andriikuiava-1' %}
+        {% set third_octet = hostvars[vm]['ansible_default_ipv4']['address'].split('.')[2] %}
+        {% if third_octet == '42' %}
+    192.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[1] }}.100.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }}/24
+        {% elif third_octet == '43' %}
+    192.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[1] }}.101.{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }}/24
+        {% endif %}
+        {% endif %}
+
+
+        }
+        unicast_peer {
+        {% for vm in groups['all'] %}
+        {% if vm != inventory_hostname %}
+    {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
+        {% endif %}
+        {% endfor %}
+        }
+        
+        track_script {
+            check_haproxy
+        }
+}

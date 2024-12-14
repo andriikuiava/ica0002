@@ -1,0 +1,11 @@
+- name: Restart Haproxy
+  service:
+    name: haproxy
+    state: restarted
+    enabled: true
+
+- name: restart prometheus-haproxy-exporter
+  service:
+    name: prometheus-haproxy-exporter
+    state: restarted
+    enabled: true

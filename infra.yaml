@@ -4,6 +4,14 @@
   roles:
     - init
 
+- name: Keepalived
+  hosts: keepalived_servers
+  roles:
+      - haproxy
+      - keepalived
+  tags:
+      - switchover
+
 - name: DNS Servers
   hosts: dns_servers
   roles:
