@@ -15,7 +15,7 @@ vrrp_instance VI_1 {
         state MASTER
         interface ens3
         virtual_router_id 51
-        priority 100
+        priority {{ priority }}
         preempt
         advert_int 1
         authentication {
