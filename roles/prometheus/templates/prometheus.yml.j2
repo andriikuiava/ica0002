@@ -38,6 +38,11 @@ scrape_configs:
         - {{ host }}:9113
         {% endfor %}
 
+    # HAProxy Exporter
+  - job_name: 'haproxy'
+    static_configs:
+      - targets: ['andriikuiava-1:9101', 'andriikuiava-2:9101']
+
   # Influx Exporter
   - job_name: 'influxdb'
     static_configs:

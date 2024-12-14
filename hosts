@@ -9,6 +9,10 @@ andriikuiava-2
 andriikuiava-1
 andriikuiava-2
 
+[haproxy_servers]
+andriikuiava-1
+andriikuiava-2
+
 [db_servers]
 andriikuiava-1
 andriikuiava-2
