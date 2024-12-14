@@ -55,3 +55,4 @@ replication_password: !vault |
   3634316361326535393131643631633031303133646466333135
 node_id: "{{ (ansible_port / 100) | int }}"
 mysql_backup_host: "{{ groups['db_servers'] | reject('equalto', mysql_host) | first | default(mysql_host) }}"
+grafana_port: 3001

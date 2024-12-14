@@ -1,25 +1,24 @@
 ---
-# Step 1: Install uWSGI and plugin for Python3
-- name: Install uWSGI and Python3 plugin
-  ansible.builtin.apt:
-    name:
+- name: Install uWSGI packages
+  apt:
+    pkg:
       - uwsgi
       - uwsgi-plugin-python3
+      - python3-pymysql
     state: present
 
-# Step 2: Copy uWSGI configuration for AGAMA using the template
-- name: Copy uWSGI config for AGAMA
-  ansible.builtin.template:
-    src: templates/agama.ini.j2
+- name: Configure uWSGI for AGAMA application
+  template:
+    src: ../templates/agama.ini.j2
     dest: /etc/uwsgi/apps-enabled/agama.ini
     owner: agama
-    group: root
-    mode: '0600'
+    mode: 0600
+  no_log: true
   notify: Restart uWSGI
 
-# Step 3: Ensure uWSGI service is running and enabled
-- name: Ensure uWSGI service is running and enabled
-  ansible.builtin.service:
+
+- name: uWSGI service
+  service:
     name: uwsgi
     state: started
-    enabled: true
+    enabled: yes

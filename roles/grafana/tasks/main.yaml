@@ -1,30 +1,64 @@
 ---
-- name: Create Grafana directories
-  file:
-    path: "/opt/grafana/{{ item }}"
+# Create required directories
+- name: Create required directories for Grafana provisioning
+  ansible.builtin.file:
+    path: "/opt/grafana/provisioning/{{ item }}"
     state: directory
+    owner: root
+    group: root
+    mode: "0755"
   loop:
-    - provisioning/dashboards
-    - provisioning/datasources
+    - dashboards
+    - datasources
 
-- name: Copy the config
-  template:
-    src: ../templates/grafana.ini.j2
+# Copy Grafana configuration file
+- name: Copy grafana.ini configuration
+  ansible.builtin.template:
+    src: grafana.ini.j2
     dest: /opt/grafana/grafana.ini
-  no_log: true
-  notify:
-    - Restart Grafana
+    owner: root
+    group: root
+    mode: "0644"
 
-- name: Pull Grafana Docker image
-  community.docker.docker_image:
-    name: grafana/grafana
-    source: pull
+# Copy provisioning files
+- name: Copy dashboard provisioning configuration
+  ansible.builtin.copy:
+    src: dashboards.yaml
+    dest: /opt/grafana/provisioning/dashboards/default.yaml
+    owner: root
+    group: root
+    mode: "0644"
 
-- name: Start Grafana container
-  docker_container:
+- name: Copy datasource provisioning configuration
+  ansible.builtin.template:
+    src: datasource.yaml.j2
+    dest: /opt/grafana/provisioning/datasources/default.yaml
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Copy dashboards JSON files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/opt/grafana/provisioning/dashboards/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
+  loop:
+    - backups.json
+    - main.json
+    - mysql.json
+    - syslog.json
+
+# Start Grafana container
+- name: Ensure Grafana container is running
+  community.docker.docker_container:
     name: grafana
     image: grafana/grafana
     state: started
     restart_policy: always
-    ports: "3001:3000"
-    volumes: /opt/grafana:/etc/grafana
+    ports:
+      - "{{ grafana_port }}:3000"
+    volumes:
+      - /opt/grafana:/etc/grafana
+  notify: Restart Grafana

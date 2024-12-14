@@ -1,5 +1,5 @@
 - name: Restart Grafana
   docker_container:
     name: grafana
-    state: restarted
-  listen: "restart grafana"
+    image: grafana/grafana
+    restart: yes

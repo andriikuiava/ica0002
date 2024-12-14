@@ -13,10 +13,10 @@
   hosts: prometheus_servers
   roles:
     - prometheus
-    - docker
-    - grafana
     - influxdb
     - agama-client
+    - docker
+    - grafana
   tags:
     - prometheus
 
@@ -30,8 +30,8 @@
 - name: Web Servers
   hosts: web_servers
   roles:
+    - agama
     - nginx
     - uwsgi
-    - agama
   tags:
     - switchover
