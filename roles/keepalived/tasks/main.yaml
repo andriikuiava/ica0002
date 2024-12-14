@@ -20,12 +20,12 @@
 
 - name: Download Keepalived Exporter
   get_url:
-    url: http://backup/keepalived-exporter-1.2.0.linux-amd64.tar.gz
-    dest: /usr/local/bin/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    url: https://github.com/mehdy/keepalived-exporter/releases/download/v1.4.0/keepalived-exporter_1.4.0_linux_amd64.tar.gz
+    dest: /usr/local/bin/keepalived-exporter-1.4.0.linux-amd64.tar.gz
 
 - name: Extract Keepalived Exporter
   ansible.builtin.unarchive:
-    src: /usr/local/bin/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    src: /usr/local/bin/keepalived-exporter-1.4.0.linux-amd64.tar.gz
     dest: /usr/local/bin/
     remote_src: yes
 
