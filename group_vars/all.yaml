@@ -1,6 +1,7 @@
 mysql_host: andriikuiava-2
 mysql_database: agama
 mysql_user: agama
+agama_port: 8000
 mysql_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   36353266376664366266373365633861326434333764393663376136623736353361653265333539

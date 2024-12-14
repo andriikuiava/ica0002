@@ -3,8 +3,8 @@ server {
     server_name _;
 
     location / {
-        uwsgi_pass 127.0.0.1:5000;
-        include uwsgi_params;
+        proxy_set_header Host $http_host;
+        proxy_pass http://localhost:8000;
     }
 
     location /nginx_status {

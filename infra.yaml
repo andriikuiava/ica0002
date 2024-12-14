@@ -9,6 +9,22 @@
   roles:
     - bind
 
+- name: Web Servers
+  hosts: web_servers
+  roles:
+    - docker
+    - agama
+    - nginx
+  tags:
+    - switchover
+
+- name: Database Server
+  hosts: db_servers
+  roles:
+    - mysql
+  tags:
+    - switchover
+
 - name: Prometheus Servers
   hosts: prometheus_servers
   roles:
@@ -20,18 +36,3 @@
   tags:
     - prometheus
 
-- name: Database Server
-  hosts: db_servers
-  roles:
-    - mysql
-  tags:
-    - switchover
-
-- name: Web Servers
-  hosts: web_servers
-  roles:
-    - agama
-    - nginx
-    - uwsgi
-  tags:
-    - switchover
