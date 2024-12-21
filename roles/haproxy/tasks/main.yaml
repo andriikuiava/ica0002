@@ -10,25 +10,24 @@
     mode: 0600
   notify: Restart Haproxy
 
-- name: Start the service
-  service:
-    name: haproxy
-    state: started
-    enabled: true
-
-- name: Install prometheus-haproxy-exporter using APT
-  apt:
+- name: Install prometheus-haproxy-exporter
+  ansible.builtin.apt:
     name: prometheus-haproxy-exporter
     state: present
+    update_cache: yes
 
-- name: Configure haproxy.scrape-uri in /etc/default/prometheus-haproxy-exporter
-  template:
-    src: prometheus_haproxy
-    dest: /etc/default/prometheus-haproxy-exporter
+- name: Update prometheus-haproxy-exporter ARGS
+  ansible.builtin.lineinfile:
+    path: /etc/default/prometheus-haproxy-exporter
+    regexp: '^ARGS='
+    line: 'ARGS="--haproxy.scrape-uri=http://127.0.0.1:9188/metrics;csv"'
+    owner: root
+    group: root
+    mode: '0644'
   notify: restart prometheus-haproxy-exporter
 
-- name: Start haproxy exporter
-  service:
+- name: Ensure prometheus-haproxy-exporter is running
+  ansible.builtin.systemd:
     name: prometheus-haproxy-exporter
     state: started
-    enabled: yes
+    enabled: true

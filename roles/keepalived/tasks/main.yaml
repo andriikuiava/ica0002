@@ -37,10 +37,7 @@
     group: root
     mode: '0644'
   no_log: true
-
-- name: Reload systemd
-  ansible.builtin.systemd:
-    daemon_reload: yes
+  notify: Reload systemd
 
 - name: Start the service
   service:

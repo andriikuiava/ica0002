@@ -47,3 +47,8 @@ scrape_configs:
   - job_name: 'influxdb'
     static_configs:
       - targets: ['andriikuiava-2:9424']
+
+    # Keepalived Exporter
+  - job_name: 'keepalived'
+    static_configs:
+      - targets: ['andriikuiava-1:9165', 'andriikuiava-2:9165']

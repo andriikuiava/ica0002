@@ -4,20 +4,6 @@
   roles:
     - init
 
-- name: Keepalived
-  hosts: keepalived_servers
-  roles:
-      - keepalived
-  tags:
-      - switchover
-
-- name: HAProxy
-  hosts: haproxy_servers
-  roles:
-      - haproxy
-  tags:
-      - switchover
-
 - name: DNS Servers
   hosts: dns_servers
   roles:
@@ -50,3 +36,16 @@
   tags:
     - prometheus
 
+- name: Keepalived
+  hosts: keepalived_servers
+  roles:
+    - keepalived
+  tags:
+    - switchover
+
+- name: HAProxy
+  hosts: haproxy_servers
+  roles:
+    - haproxy
+  tags:
+    - switchover
