@@ -8,6 +8,8 @@
   hosts: dns_servers
   roles:
     - bind
+  tags:
+    - dns
 
 - name: Web Servers
   hosts: web_servers

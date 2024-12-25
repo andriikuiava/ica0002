@@ -2,16 +2,11 @@
 # Install Bind9
 - name: Install Bind9
   ansible.builtin.apt:
-    name: bind9
+    name:
+      - bind9
+      - python3-dnspython
     state: present
     update_cache: true
-
-# Ensure Bind9 service is started and enabled
-- name: Ensure Bind9 is running and enabled on boot
-  ansible.builtin.service:
-    name: bind9
-    state: started
-    enabled: true
 
 # Configure DNS forwarders in Bind9
 - name: Configure DNS forwarders
@@ -27,33 +22,23 @@
     dest: /var/cache/bind/db.megacoolproject.io
     owner: bind
     group: bind
-    mode: '0644'
+    mode: "0644"
   notify: Restart Bind9
 
-
 # Configure master zone in Bind9
-- name: Ensure master zone for megacoolproject.io is configured
-  ansible.builtin.blockinfile:
-    path: /etc/bind/named.conf.local
-    block: |
-      zone "megacoolproject.io" {
-          type master;
-          file "/var/cache/bind/db.megacoolproject.io";
-      };
-    marker: "# {mark} ANSIBLE MANAGED BLOCK for megacoolproject.io"
+- name: Configure Bind9 zones
+  ansible.builtin.template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    owner: root
+    group: root
+    mode: "0644"
   notify: Reload Bind9
 
-# Install Prometheus Node Exporter
-- name: Install Prometheus Node Exporter
-  ansible.builtin.apt:
-    name: prometheus-node-exporter
-    state: present
-    update_cache: yes
-
-# Ensure Prometheus Node Exporter is running and enabled
-- name: Ensure Prometheus Node Exporter service is running
+# Ensure Bind9 service is started and enabled
+- name: Ensure Bind9 is running and enabled on boot
   ansible.builtin.service:
-    name: prometheus-node-exporter
+    name: bind9
     state: started
     enabled: true
 
