@@ -28,3 +28,8 @@ key "transfer.key" {
     algorithm hmac-sha256;
     secret "{{ dns_transfer_key_secret }}";
 };
+
+key "nsupdate.key" {
+    algorithm hmac-sha256;
+    secret "{{ dns_nsupdate_secret }}";
+};

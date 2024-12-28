@@ -43,3 +43,16 @@
   loop: "{{ range(1, num_containers_per_machine|int + 1) }}"
   loop_control:
     loop_var: item
+
+#- name: Create CNAME records for Agama instances
+#  community.general.nsupdate:
+#    key_name: "nsupdate.key"
+#    server: "192.168.43.112"
+#    key_algorithm: "hmac-sha256"
+#    key_secret: "{{ nsupdate_secret }}"
+#    zone: "{{ startup_name }}"
+#    state: present
+#    type: "CNAME"
+#    value: "{{ hostvars[groups['agama'][item]]['ansible_hostname'] }}"
+#    record: "www-{{ item + 1 }}"
+#  loop: "{{ range( groups['agama'] | length ) }}"

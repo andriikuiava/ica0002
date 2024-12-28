@@ -25,30 +25,30 @@ scrape_configs:
     static_configs:
       - targets: ['andriikuiava-2:9119']
 
-  # MySQL Exporter
-  - job_name: 'mysql'
-    static_configs:
-      - targets: ['andriikuiava-1:9104', 'andriikuiava-2:9104']
+# MySQL Exporter
+- job_name: 'mysql'
+static_configs:
+  - targets: ['andriikuiava-1:9104', 'andriikuiava-2:9104']
 
-  # Nginx Exporter
-  - job_name: 'nginx'
-    static_configs:
-      - targets:
-        {% for host in groups['web_servers'] -%}
-        - {{ host }}:9113
-        {% endfor %}
+# Nginx Exporter
+- job_name: 'nginx'
+static_configs:
+  - targets:
+    {% for host in groups['web_servers'] -%}
+    - {{ host }}:9113
+    {% endfor %}
 
-    # HAProxy Exporter
-  - job_name: 'haproxy'
-    static_configs:
-      - targets: ['andriikuiava-1:9101', 'andriikuiava-2:9101']
+# HAProxy Exporter
+- job_name: 'haproxy'
+static_configs:
+  - targets: ['andriikuiava-1:9101', 'andriikuiava-2:9101']
 
-  # Influx Exporter
-  - job_name: 'influxdb'
-    static_configs:
-      - targets: ['andriikuiava-2:9424']
+# Influx Exporter
+- job_name: 'influxdb'
+static_configs:
+  - targets: ['andriikuiava-2:9424']
 
-    # Keepalived Exporter
-  - job_name: 'keepalived'
-    static_configs:
-      - targets: ['andriikuiava-1:9165', 'andriikuiava-2:9165']
+# Keepalived Exporter
+- job_name: 'keepalived'
+static_configs:
+  - targets: ['andriikuiava-1:9165', 'andriikuiava-2:9165']
