@@ -113,3 +113,5 @@ domain_name: "megacoolproject.io"
 a_records:
   backup: 192.168.42.132
   google: 8.8.8.8
+prometheus_port: 9090
+influxdb_port: 8086

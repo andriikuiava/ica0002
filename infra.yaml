@@ -32,7 +32,7 @@
   roles:
     - prometheus
     - influxdb
-    - agama-client
+    - agama_client
     - docker
     - grafana
   tags:
