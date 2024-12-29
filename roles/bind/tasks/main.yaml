@@ -93,22 +93,25 @@
 - name: Add A record for backup server
   community.general.nsupdate:
     key_name: "nsupdate.key"
-    server: "192.168.42.95"
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_key_secret }}"
     zone: "megacoolproject.io"
-    record: "backup.megacoolproject.io."
+    record: "backup.{{ domain_name }}."
     type: A
     value: "{{ backup_server_ip }}"
 
 
-#- name: Add A records
-#  include_role:
-#    name: dns_record
-#    tasks_from: add_dns_records
-#  vars:
-#    record: "{{ item.key }}"
-#    value: "{{ item.value }}"
-#    type: "A"
-#  loop: "{{ a_records | dict2items }}"
-#  when: inventory_hostname in groups['bind_masters']
+- name: Add CNAME for Bind9 servers
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_key_secret }}"
+    zone: "{{ domain_name }}"
+    record: "{{ item.name }}.{{ domain_name }}."
+    type: CNAME
+    value: "{{ item.target }}.{{  domain_name  }}."
+  loop:
+    - { name: "ns-1", target: "andriikuiava-1" }
+    - { name: "ns-2", target: "andriikuiava-2" }

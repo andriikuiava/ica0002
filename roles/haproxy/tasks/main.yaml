@@ -31,3 +31,17 @@
     name: prometheus-haproxy-exporter
     state: started
     enabled: true
+
+- name: Add CNAME for HAProxy instances
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_key_secret }}"
+    zone: "{{ domain_name }}"
+    record: "{{ item.name }}.{{ domain_name }}."
+    type: CNAME
+    value: "{{ item.target }}.{{ domain_name }}."
+  loop:
+    - { name: "lb-1", target: "andriikuiava-1" }
+    - { name: "lb-2", target: "andriikuiava-2" }

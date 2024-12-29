@@ -1,5 +1,5 @@
-andriikuiava-1 ansible_host=193.40.156.67 ansible_port=9522 ansible_user=ubuntu
-andriikuiava-2 ansible_host=193.40.156.67 ansible_port=18922 ansible_user=ubuntu
+andriikuiava-1 ansible_host=193.40.156.67 ansible_port=11522 ansible_user=ubuntu
+andriikuiava-2 ansible_host=193.40.156.67 ansible_port=13522 ansible_user=ubuntu
 
 [web_servers]
 andriikuiava-1
@@ -18,6 +18,12 @@ andriikuiava-1
 andriikuiava-2
 
 [prometheus_servers]
+andriikuiava-2
+
+[influxdb]
+andriikuiava-2
+
+[grafana]
 andriikuiava-2
 
 [dns_servers]

@@ -44,15 +44,14 @@
   loop_control:
     loop_var: item
 
-#- name: Create CNAME records for Agama instances
-#  community.general.nsupdate:
-#    key_name: "nsupdate.key"
-#    server: "192.168.43.112"
-#    key_algorithm: "hmac-sha256"
-#    key_secret: "{{ nsupdate_secret }}"
-#    zone: "{{ startup_name }}"
-#    state: present
-#    type: "CNAME"
-#    value: "{{ hostvars[groups['agama'][item]]['ansible_hostname'] }}"
-#    record: "www-{{ item + 1 }}"
-#  loop: "{{ range( groups['agama'] | length ) }}"
+- name: Add CNAME for Agama containers
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_primary'][0]].ansible_default_ipv4.address }}"
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_key_secret }}"
+    zone: "{{ domain_name }}"
+    type: CNAME
+    value: "{{ hostvars[groups['agama'][item]]['ansible_hostname'] }}"
+    record: "www-{{ item + 1 }}"
+  loop: "{{ range( groups['agama'] | length ) }}"

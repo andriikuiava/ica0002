@@ -170,7 +170,19 @@
     - Reset MySQL source
     - Reset MySQL replica
 
-
+- name: Add CNAME for MySQL instances
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_key_secret }}"
+    zone: "{{ domain_name }}"
+    record: "{{ item.name }}.{{ domain_name }}."
+    type: CNAME
+    value: "{{ item.target }}.{{ domain_name }}."
+  loop:
+    - { name: "db-1", target: "andriikuiava-1" }
+    - { name: "db-2", target: "andriikuiava-2" }
 
 ## Create override configuration for MySQL exporter
 #- name: Restart MySQL exporter if credentials change

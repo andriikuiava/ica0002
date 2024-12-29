@@ -42,3 +42,14 @@
   ansible.builtin.service:
     name: nginx
     state: started
+
+- name: Add CNAME for Prometheus
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_primary'][0]].ansible_default_ipv4.address }}"
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_key_secret }}"
+    zone: "{{ domain_name }}"
+    record: "prometheus.{{ domain_name }}."
+    type: CNAME
+    value: "andriikuiava-2.{{ domain_name }}."

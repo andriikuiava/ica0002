@@ -83,3 +83,14 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Add CNAME for InfluxDB
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_key_secret }}"
+    zone: "{{ domain_name }}"
+    record: "influxdb.{{ domain_name }}."
+    type: CNAME
+    value: "{{ hostvars[groups['influxdb'][0]]['ansible_hostname'] }}"

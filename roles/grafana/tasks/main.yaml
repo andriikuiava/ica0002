@@ -62,3 +62,14 @@
     volumes:
       - /opt/grafana:/etc/grafana
   notify: Restart Grafana
+
+- name: Add CNAME for Grafana
+  community.general.nsupdate:
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ nsupdate_key_secret }}"
+    zone: "{{ domain_name }}"
+    record: "grafana.{{ domain_name }}."
+    type: CNAME
+    value: "{{ hostvars[groups['grafana'][0]]['ansible_hostname'] }}"
