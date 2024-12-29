@@ -23,8 +23,9 @@
     owner: bind
     group: bind
     mode: "0644"
-    force: no
-  notify: Restart Bind9
+  notify:
+    - Restart Bind9
+    - Reload Bind9
 
 - name: Create reverse zone file
   ansible.builtin.template:
@@ -33,7 +34,6 @@
     owner: root
     group: root
     mode: "0644"
-    force: no
   notify:
     - Restart Bind9
     - Reload Bind9

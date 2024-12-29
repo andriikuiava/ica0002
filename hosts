@@ -1,5 +1,5 @@
-andriikuiava-1 ansible_host=193.40.156.67 ansible_port=11522 ansible_user=ubuntu
-andriikuiava-2 ansible_host=193.40.156.67 ansible_port=13522 ansible_user=ubuntu
+andriikuiava-1 ansible_host=193.40.156.67 ansible_port=5922 ansible_user=ubuntu
+andriikuiava-2 ansible_host=193.40.156.67 ansible_port=10022 ansible_user=ubuntu
 
 [web_servers]
 andriikuiava-1
@@ -48,3 +48,4 @@ andriikuiava-2
 
 [agama]
 andriikuiava-1
+andriikuiava-2

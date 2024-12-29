@@ -7,7 +7,7 @@ zone "{{ domain_name }}" {
     type slave;
     masters { {{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}; };
 {% endif %}
-    file "db.{{ domain_name }}";
+   file "/var/cache/bind/db.{{ domain_name }}";
 };
 
 zone "168.192.in-addr.arpa." {
