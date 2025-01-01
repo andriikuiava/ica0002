@@ -5,12 +5,6 @@
     state: stopped
     enabled: no
 
-# Remove old resolv.conf and replace with correct DNS settings
-- name: Remove old resolv.conf symlink
-  ansible.builtin.file:
-    path: /etc/resolv.conf
-    state: absent
-
 # Create resolv.conf with DNS settings
 - name: Create resolv.conf with DNS settings
   ansible.builtin.template:

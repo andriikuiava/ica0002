@@ -100,12 +100,7 @@
     name: bind_exporter
     state: started
     enabled: true
-
-# Restart Bind9 service
-- name: Reload Bind9
-  ansible.builtin.service:
-    name: bind9
-    state: reloaded
+  notify: Restart Bind9
 
 - name: Add A record for backup server
   community.general.nsupdate:

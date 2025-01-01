@@ -32,13 +32,7 @@
     owner: root
     group: root
     mode: '0644'
-
-# Restart rsyslog
-- name: Restart rsyslog
-  ansible.builtin.service:
-    name: rsyslog
-    state: restarted
-    enabled: true
+  notify: Restart rsyslog
 
 # Ensure backup user exists with the correct home directory
 - name: Ensure backup user exists with the correct home directory
@@ -58,7 +52,13 @@
     group: backup
     mode: '0700'
 
-# Generate SSH key pair for backup user
+# Check if the SSH key already exists
+- name: Check if SSH key pair exists
+  ansible.builtin.stat:
+    path: /home/backup/.ssh/id_rsa
+  register: ssh_key_check
+
+# Generate SSH key pair for backup user if it does not exist
 - name: Generate SSH key pair for backup user
   ansible.builtin.openssh_keypair:
     path: /home/backup/.ssh/id_rsa
@@ -67,6 +67,7 @@
     mode: '0600'
     type: rsa
     size: 2048
+  when: not ssh_key_check.stat.exists
   register: ssh_keypair
 
 # Copy the public key to the control node

@@ -2,11 +2,12 @@
 - name: Download InfluxDB .deb package
   ansible.builtin.get_url:
     url: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb
-    dest: /tmp/influxdb.deb
+    dest: /home/ubuntu/influxdb
 
-- name: Install InfluxDB .deb package
-  ansible.builtin.command:
-    cmd: "dpkg -i /tmp/influxdb.deb"
+- name: Install InfluxDB
+  ansible.builtin.apt:
+    deb: /home/ubuntu/influxdb
+    state: present
 
 - name: Ensure InfluxDB is enabled and started
   ansible.builtin.service:
@@ -34,11 +35,6 @@
     name: telegraf
     state: started
     enabled: true
-
-- name: Restart Telegraf
-  ansible.builtin.systemd:
-    name: telegraf
-    state: restarted
   notify: Restart Telegraf
 
 - name: Download InfluxDB Stats Exporter binary
