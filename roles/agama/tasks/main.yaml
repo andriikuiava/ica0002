@@ -35,7 +35,7 @@
     name: "agama{{ item }}"
     image: agama
     env:
-      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}"
+      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@db-2.megacoolproject.io/{{ mysql_database }}"
     ports:
       - "{{ agama_start_port + (item - 1) }}:{{ agama_docker_port }}"
     restart_policy: always
@@ -52,6 +52,6 @@
     key_secret: "{{ nsupdate_key_secret }}"
     zone: "{{ domain_name }}"
     type: CNAME
-    value: "{{ hostvars[groups['agama'][item]]['ansible_hostname'] }}"
+    value: "{{ hostvars[groups['agama_servers'][item]]['ansible_hostname'] }}"
     record: "www-{{ item + 1 }}"
-  loop: "{{ range( groups['agama'] | length ) }}"
+  loop: "{{ range( groups['agama_servers'] | length ) }}"

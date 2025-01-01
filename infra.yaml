@@ -3,51 +3,82 @@
   hosts: all
   roles:
     - init
+  tags:
+    - init
 
 - name: DNS Servers
-  hosts: dns_servers
+  hosts: dns_servers:children
   roles:
     - bind
   tags:
-    - dns
+    - bind
 
-- name: Web Servers
-  hosts: web_servers
+- name: Resolv DNS
+  hosts: all
   roles:
-    - docker
-    - agama
-    - nginx
+    - resolv_dns
   tags:
-    - switchover
+    - resolv_dns
 
 - name: Database Server
   hosts: db_servers
   roles:
     - mysql
   tags:
-    - switchover
+    - mysql
 
 - name: Prometheus Servers
   hosts: prometheus_servers
   roles:
     - prometheus
-    - influxdb
-    - agama_client
-    - docker
-    - grafana
   tags:
     - prometheus
 
-- name: Keepalived
-  hosts: keepalived_servers
+- name: Docker
+  hosts: docker_servers
   roles:
-    - keepalived
+    - docker
   tags:
-    - switchover
+    - docker
 
-- name: HAProxy
+- name: Grafana Tasks
+  hosts: grafana_servers
+  roles:
+    - grafana
+  tags: grafana
+
+- name: Agama tasks
+  hosts: agama_servers
+  roles:
+    - agama
+  tags: agama
+
+- name: Agama client tasks
+  hosts: agama_clients
+  roles:
+    - agama_client
+  tags: agama_client
+
+- name: Web server tasks
+  hosts: web_servers
+  roles:
+    - nginx
+  tags: web
+
+- name: Influxdb tasks
+  hosts: influxdb_servers
+  roles:
+    - influxdb
+  tags: influxdb
+
+- name: Haproxy tasks
   hosts: haproxy_servers
   roles:
     - haproxy
-  tags:
-    - switchover
+  tags: haproxy
+
+- name: Keepalived tasks
+  hosts: keepalived_servers
+  roles:
+    - keepalived
+  tags: keepalived

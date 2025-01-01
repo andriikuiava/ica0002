@@ -31,17 +31,11 @@
     name: nginx
     state: present
 
-- name: Configure Nginx
-  ansible.builtin.template:
-    src: nginx_default.j2
-    dest: /etc/nginx/sites-enabled/default
-  notify:
-    - Restart Nginx
-
 - name: Start Nginx
   ansible.builtin.service:
     name: nginx
     state: started
+    enabled: true
 
 - name: Add CNAME for Prometheus
   community.general.nsupdate:
@@ -52,4 +46,4 @@
     zone: "{{ domain_name }}"
     record: "prometheus.{{ domain_name }}."
     type: CNAME
-    value: "andriikuiava-2.{{ domain_name }}."
+    value: "andriikuiava-3.{{ domain_name }}."

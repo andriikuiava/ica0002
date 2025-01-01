@@ -6,8 +6,8 @@
 
 # Copy Nginx configuration for AGAMA
 - name: Copy Nginx config to sites-enabled
-  ansible.builtin.copy:
-    src: roles/nginx/files/default
+  ansible.builtin.template:
+    src: default.j2
     dest: /etc/nginx/sites-enabled/default
   notify: Restart Nginx
 
@@ -45,4 +45,4 @@
   ansible.builtin.service:
     name: prometheus-nginx-exporter
     state: started
-    enabled: yes
+    enabled: true

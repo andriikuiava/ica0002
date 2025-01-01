@@ -1,0 +1,27 @@
+server {
+    listen 80 default_server;
+    server_name _;
+
+    location / {
+        proxy_set_header Host $http_host;
+    }
+
+    {% if inventory_hostname in groups['prometheus_servers'] %}
+    location /prometheus {
+       proxy_pass http://localhost:9090;
+    }
+    {% endif %}
+
+    {% if inventory_hostname in groups['grafana_servers'] %}
+    location /grafana {
+        proxy_set_header Host $http_host;
+        proxy_pass http://localhost:{{ grafana_port }};
+    }
+    {% endif %}
+
+    location /nginx_status {
+        stub_status;
+        allow 127.0.0.1;
+        deny all;
+    }
+}

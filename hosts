@@ -1,51 +1,57 @@
-andriikuiava-1 ansible_host=193.40.156.67 ansible_port=5922 ansible_user=ubuntu
-andriikuiava-2 ansible_host=193.40.156.67 ansible_port=10022 ansible_user=ubuntu
+andriikuiava-1 ansible_host=193.40.156.67 ansible_port=16422 ansible_user=ubuntu
+andriikuiava-2 ansible_host=193.40.156.67 ansible_port=6222 ansible_user=ubuntu
+andriikuiava-3 ansible_host=193.40.156.67 ansible_port=2422 ansible_user=ubuntu
 
-[web_servers]
+[dns_servers:children]
+dns_primary
+dns_secondary
+
+[dns_primary]
+andriikuiava-3
+
+[dns_secondary]
 andriikuiava-1
 andriikuiava-2
 
-[keepalived_servers]
+[resolv_dns_servers]
 andriikuiava-1
 andriikuiava-2
-
-[haproxy_servers]
-andriikuiava-1
-andriikuiava-2
+andriikuiava-3
 
 [db_servers]
 andriikuiava-1
 andriikuiava-2
 
 [prometheus_servers]
-andriikuiava-2
+andriikuiava-3
 
-[influxdb]
+[docker_servers]
+andriikuiava-1
 andriikuiava-2
+andriikuiava-3
 
-[grafana]
-andriikuiava-2
+[grafana_servers]
+andriikuiava-3
 
-[dns_servers]
+[agama_servers]
 andriikuiava-1
 andriikuiava-2
 
-[dns_primary]
-andriikuiava-1
+[agama_clients]
+andriikuiava-3
 
-[dns_secondary]
+[web_servers]
+andriikuiava-1
+andriikuiava-2
+andriikuiava-3
+
+[influxdb_servers]
+andriikuiava-3
+
+[haproxy_servers]
+andriikuiava-1
 andriikuiava-2
 
-[dns_servers:children]
-dns_primary
-dns_secondary
-
-[bind_masters]
-andriikuiava-1
-
-[bind_slaves]
-andriikuiava-2
-
-[agama]
+[keepalived_servers]
 andriikuiava-1
 andriikuiava-2

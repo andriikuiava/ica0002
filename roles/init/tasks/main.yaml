@@ -1,63 +1,8 @@
-# Commented out Ansible ping module
-#- name: Ansible ping module
-#  ansible.builtin.ping:
-
-#
-## Create user juri
-#- name: Create juri user
-#  ansible.builtin.user:
-#    name: juri
-#    state: present
-#    shell: /bin/bash
-#
-## Set up SSH key for juri from GitHub
-#- name: Add GitHub public key for juri
-#  ansible.builtin.authorized_key:
-#    user: juri
-#    state: present
-#    key: https://github.com/hudolejev.keys
-#
-## Create user roman
-#- name: Create roman user
-#  ansible.builtin.user:
-#    name: roman
-#    state: present
-#    shell: /bin/bash
-#
-## Set up SSH key for roman from GitHub
-#- name: Add GitHub public key for roman
-#  ansible.builtin.authorized_key:
-#    user: roman
-#    state: present
-#    key: https://github.com/romankuchin.keys
-
 # Update APT cache
 - name: Update APT cache
   ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: 86400
-
-# Ensure systemd-resolved is disabled
-- name: Disable systemd-resolved
-  ansible.builtin.systemd:
-    name: systemd-resolved
-    state: stopped
-    enabled: no
-
-# Remove old resolv.conf and replace with correct DNS settings
-- name: Remove old resolv.conf symlink
-  ansible.builtin.file:
-    path: /etc/resolv.conf
-    state: absent
-
-# Create resolv.conf with DNS settings
-- name: Create resolv.conf with DNS settings
-  ansible.builtin.template:
-    src: resolv.conf.j2
-    dest: /etc/resolv.conf
-    owner: root
-    group: root
-    mode: '0644'
 
 # Install Prometheus Node Exporter
 - name: Install Prometheus Node Exporter
@@ -93,7 +38,7 @@
   ansible.builtin.service:
     name: rsyslog
     state: restarted
-    enabled: yes
+    enabled: true
 
 # Ensure backup user exists with the correct home directory
 - name: Ensure backup user exists with the correct home directory

@@ -10,6 +10,12 @@
     mode: 0600
   notify: Restart Haproxy
 
+- name: Ensure HAProxy is enabled and started
+  ansible.builtin.service:
+    name: haproxy
+    enabled: true
+    state: started
+
 - name: Install prometheus-haproxy-exporter
   ansible.builtin.apt:
     name: prometheus-haproxy-exporter
@@ -32,6 +38,12 @@
     state: started
     enabled: true
 
+- name: Ensure prometheus-haproxy-exporter is enabled and started
+  ansible.builtin.service:
+    name: prometheus-haproxy-exporter
+    enabled: true
+    state: started
+
 - name: Add CNAME for HAProxy instances
   community.general.nsupdate:
     server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
@@ -45,3 +57,4 @@
   loop:
     - { name: "lb-1", target: "andriikuiava-1" }
     - { name: "lb-2", target: "andriikuiava-2" }
+  notify: restart prometheus-haproxy-exporter

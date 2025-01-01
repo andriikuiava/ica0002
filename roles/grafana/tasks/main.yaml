@@ -72,4 +72,4 @@
     zone: "{{ domain_name }}"
     record: "grafana.{{ domain_name }}."
     type: CNAME
-    value: "{{ hostvars[groups['grafana'][0]]['ansible_hostname'] }}"
+    value: "{{ hostvars[groups['grafana_servers'][0]]['ansible_hostname'] }}"

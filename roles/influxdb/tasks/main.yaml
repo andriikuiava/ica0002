@@ -93,4 +93,4 @@
     zone: "{{ domain_name }}"
     record: "influxdb.{{ domain_name }}."
     type: CNAME
-    value: "{{ hostvars[groups['influxdb'][0]]['ansible_hostname'] }}"
+    value: "{{ hostvars[groups['influxdb_servers'][0]]['ansible_hostname'] }}"

@@ -50,5 +50,5 @@
 - name: Enable and start agama-client service
   ansible.builtin.systemd:
     name: agama-client
-    enabled: yes
+    enabled: true
     state: started

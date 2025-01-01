@@ -23,6 +23,8 @@
     owner: bind
     group: bind
     mode: "0644"
+    force: no
+#  when: inventory_hostname in groups['dns_primary']
   notify:
     - Restart Bind9
     - Reload Bind9
@@ -34,6 +36,8 @@
     owner: root
     group: root
     mode: "0644"
+    force: no
+#  when: inventory_hostname in groups['dns_primary']
   notify:
     - Restart Bind9
     - Reload Bind9
@@ -95,7 +99,7 @@
   ansible.builtin.systemd:
     name: bind_exporter
     state: started
-    enabled: yes
+    enabled: true
 
 # Restart Bind9 service
 - name: Reload Bind9
@@ -128,3 +132,4 @@
   loop:
     - { name: "ns-1", target: "andriikuiava-1" }
     - { name: "ns-2", target: "andriikuiava-2" }
+    - { name: "ns-3", target: "andriikuiava-3" }

@@ -3,4 +3,4 @@ $ActionQueueFileName srvrfwd
 $ActionResumeRetryCount -1
 $ActionQueueSaveOnShutdown on
 
-*.* @{{ hostvars['andriikuiava-2']['ansible_default_ipv4']['address'] }}:6514;RSYSLOG_SyslogProtocol23Format
+*.* @influxdb.{{ domain_name }}:6514;RSYSLOG_SyslogProtocol23Format

@@ -1,16 +1,17 @@
 $TTL 604800
-@   IN  SOA ns.megacoolproject.io. admin.megacoolproject.io. (
+@   IN  SOA ns.{{ domain_name }}. admin.{{ domain_name }}. (
             2          ; Serial
         604800         ; Refresh
          86400         ; Retry
        2419200         ; Expire
         604800 )       ; Negative Cache TTL
 
-; Name servers
-@   IN  NS  ns.megacoolproject.io.
+{% for vm in groups['dns_servers'] %}
+{{ domain_name }}. IN NS {{ vm }}.{{ domain_name }}.
+{% endfor %}
 
-; A records for VMs
-ns  IN  A   {{ hostvars['andriikuiava-2']['ansible_default_ipv4']['address'] }}
-andriikuiava-1  IN  A   {{ hostvars['andriikuiava-1']['ansible_default_ipv4']['address'] }}
-andriikuiava-2  IN  A   {{ hostvars['andriikuiava-2']['ansible_default_ipv4']['address'] }}
+{% for vm in hostvars %}
+{{ hostvars[vm]['inventory_hostname'] }} IN A {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
+{% endfor %}
+
 

@@ -21,4 +21,4 @@
   service:
     name: uwsgi
     state: started
-    enabled: yes
+    enabled: true

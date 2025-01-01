@@ -1,0 +1,108 @@
+Tue Dec 31 15:35:09 EET 2024
++ hostname
+andriis-MacBook-Air.local
++ ansible-playbook infra.yaml --diff
+
+PLAY [Initial setup] ***********************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Platform linux on host andriikuiava-2 is using the discovered Python
+interpreter at /usr/bin/python3.10, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host andriikuiava-1 is using the discovered Python
+interpreter at /usr/bin/python3.10, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Platform linux on host andriikuiava-3 is using the discovered Python
+interpreter at /usr/bin/python3.10, but future installation of another Python
+interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [andriikuiava-2]
+ok: [andriikuiava-1]
+ok: [andriikuiava-3]
+
+TASK [init : Update APT cache] *************************************************
+ok: [andriikuiava-2]
+ok: [andriikuiava-1]
+ok: [andriikuiava-3]
+
+TASK [init : Disable systemd-resolved] *****************************************
+ok: [andriikuiava-2]
+ok: [andriikuiava-1]
+ok: [andriikuiava-3]
+
+TASK [init : Remove old resolv.conf symlink] ***********************************
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/etc/resolv.conf",
+-    "state": "file"
++    "state": "absent"
+ }
+
+changed: [andriikuiava-2]
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/etc/resolv.conf",
+-    "state": "file"
++    "state": "absent"
+ }
+
+changed: [andriikuiava-1]
+--- before
++++ after
+@@ -1,4 +1,4 @@
+ {
+     "path": "/etc/resolv.conf",
+-    "state": "file"
++    "state": "absent"
+ }
+
+changed: [andriikuiava-3]
+
+TASK [init : Create resolv.conf with DNS settings] *****************************
+--- before
++++ after: /Users/andriikuiava/.ansible/tmp/ansible-local-92181rbhdb31i/tmpalmuxjca/resolv.conf.j2
+@@ -0,0 +1,4 @@
++search megacoolproject.io
++search 8.8.8.8
++nameserver 192.168.42.160
++nameserver 192.168.42.139
+
+changed: [andriikuiava-3]
+--- before
++++ after: /Users/andriikuiava/.ansible/tmp/ansible-local-92181rbhdb31i/tmp_z2bvtzf/resolv.conf.j2
+@@ -0,0 +1,4 @@
++search megacoolproject.io
++search 8.8.8.8
++nameserver 192.168.42.160
++nameserver 192.168.42.139
+
+changed: [andriikuiava-2]
+--- before
++++ after: /Users/andriikuiava/.ansible/tmp/ansible-local-92181rbhdb31i/tmpg3ng01l_/resolv.conf.j2
+@@ -0,0 +1,4 @@
++search megacoolproject.io
++search 8.8.8.8
++nameserver 192.168.42.160
++nameserver 192.168.42.139
+
+changed: [andriikuiava-1]
+
+TASK [init : Install Prometheus Node Exporter] *********************************
+fatal: [andriikuiava-2]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: unknown reason"}
+fatal: [andriikuiava-1]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: unknown reason"}
+fatal: [andriikuiava-3]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: unknown reason"}
+
+PLAY RECAP *********************************************************************
+andriikuiava-1             : ok=5    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+andriikuiava-2             : ok=5    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+andriikuiava-3             : ok=5    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+

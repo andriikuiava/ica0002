@@ -1,0 +1,21 @@
+# Ensure systemd-resolved is disabled
+- name: Disable systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
+
+# Remove old resolv.conf and replace with correct DNS settings
+- name: Remove old resolv.conf symlink
+  ansible.builtin.file:
+    path: /etc/resolv.conf
+    state: absent
+
+# Create resolv.conf with DNS settings
+- name: Create resolv.conf with DNS settings
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'

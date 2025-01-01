@@ -37,7 +37,7 @@ vrrp_instance VI_1 {
 
         }
         unicast_peer {
-        {% for vm in groups['all'] %}
+        {% for vm in groups['dns_secondary'] %}
         {% if vm != inventory_hostname %}
     {{ hostvars[vm]['ansible_default_ipv4']['address'] }}
         {% endif %}

@@ -1,5 +1,0 @@
-search {{ domain_name }}
-{% for dns_server in groups['dns_primary'] + groups['dns_secondary'] %}
-nameserver {{ hostvars[dns_server]['ansible_default_ipv4']['address'] }}
-{% endfor %}
-nameserver 8.8.8.8
