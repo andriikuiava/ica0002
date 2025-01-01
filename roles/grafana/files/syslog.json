@@ -1,45 +1,12 @@
 {
-  "__inputs": [
-    {
-      "name": "InfluxDB:Telegraf",
-      "label": "InfluxDB",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "influxdb",
-      "pluginName": "InfluxDB"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "6.1.6"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "influxdb",
-      "name": "InfluxDB",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -50,99 +17,271 @@
   },
   "description": "Telegraf / InfluxDB / Grafana as syslog receiver",
   "editable": true,
-  "gnetId": 12433,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1584168214719,
   "links": [],
   "panels": [
     {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB:Telegraf",
-      "decimals": 0,
-      "fill": 1,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PDD5124384626356D"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Messages / min",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Info"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "rgb(80, 80, 80)",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Notice"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "rgb(182, 182, 182)",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Warning"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E0B400",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Error"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#FF780A",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E02F44",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Alert"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#8F3BB8",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Emergency"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#8F3BB8",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 10,
-      "interval": "",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": false,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "sort": null,
-        "sortDesc": null,
-        "total": true,
-        "values": true
-      },
-      "lines": false,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "Info",
-          "color": "rgb(80, 80, 80)",
-          "stack": "A"
+      "options": {
+        "alertThreshold": true,
+        "legend": {
+          "calcs": [
+            "mean",
+            "max",
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
         },
-        {
-          "alias": "Notice",
-          "color": "rgb(182, 182, 182)",
-          "stack": "A"
-        },
-        {
-          "alias": "Warning",
-          "color": "#E0B400",
-          "stack": "A"
-        },
-        {
-          "alias": "Error",
-          "color": "#FF780A",
-          "stack": "A"
-        },
-        {
-          "alias": "Critical",
-          "color": "#E02F44",
-          "stack": "A"
-        },
-        {
-          "alias": "Alert",
-          "color": "#8F3BB8",
-          "stack": "A"
-        },
-        {
-          "alias": "Emergency",
-          "color": "#8F3BB8",
-          "stack": "A"
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "alias": "Info",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["1m"],
+              "params": [
+                "1m"
+              ],
               "type": "time"
             },
             {
-              "params": ["null"],
+              "params": [
+                "null"
+              ],
               "type": "fill"
             }
           ],
@@ -154,7 +293,9 @@
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               },
               {
@@ -186,18 +327,32 @@
               "key": "appname",
               "operator": "=~",
               "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "message",
+              "operator": "=~",
+              "value": "/$Query/"
             }
           ]
         },
         {
           "alias": "Notice",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["1m"],
+              "params": [
+                "1m"
+              ],
               "type": "time"
             },
             {
-              "params": ["null"],
+              "params": [
+                "null"
+              ],
               "type": "fill"
             }
           ],
@@ -209,7 +364,9 @@
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               },
               {
@@ -241,18 +398,32 @@
               "key": "appname",
               "operator": "=~",
               "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "message",
+              "operator": "=~",
+              "value": "/$Query/"
             }
           ]
         },
         {
           "alias": "Warning",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["1m"],
+              "params": [
+                "1m"
+              ],
               "type": "time"
             },
             {
-              "params": ["null"],
+              "params": [
+                "null"
+              ],
               "type": "fill"
             }
           ],
@@ -264,7 +435,9 @@
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               },
               {
@@ -296,18 +469,32 @@
               "key": "appname",
               "operator": "=~",
               "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "message",
+              "operator": "=~",
+              "value": "/$Query/"
             }
           ]
         },
         {
           "alias": "Error",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["1m"],
+              "params": [
+                "1m"
+              ],
               "type": "time"
             },
             {
-              "params": ["null"],
+              "params": [
+                "null"
+              ],
               "type": "fill"
             }
           ],
@@ -319,7 +506,9 @@
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               },
               {
@@ -351,18 +540,32 @@
               "key": "appname",
               "operator": "=~",
               "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "message",
+              "operator": "=~",
+              "value": "/$Query/"
             }
           ]
         },
         {
           "alias": "Critical",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["1m"],
+              "params": [
+                "1m"
+              ],
               "type": "time"
             },
             {
-              "params": ["null"],
+              "params": [
+                "null"
+              ],
               "type": "fill"
             }
           ],
@@ -374,7 +577,9 @@
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               },
               {
@@ -406,18 +611,32 @@
               "key": "appname",
               "operator": "=~",
               "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "message",
+              "operator": "=~",
+              "value": "/$Query/"
             }
           ]
         },
         {
           "alias": "Alert",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["1m"],
+              "params": [
+                "1m"
+              ],
               "type": "time"
             },
             {
-              "params": ["null"],
+              "params": [
+                "null"
+              ],
               "type": "fill"
             }
           ],
@@ -429,7 +648,9 @@
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               },
               {
@@ -461,18 +682,32 @@
               "key": "appname",
               "operator": "=~",
               "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "message",
+              "operator": "=~",
+              "value": "/$Query/"
             }
           ]
         },
         {
-          "alias": "Emergancy",
+          "alias": "Emergency",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["1m"],
+              "params": [
+                "1m"
+              ],
               "type": "time"
             },
             {
-              "params": ["null"],
+              "params": [
+                "null"
+              ],
               "type": "fill"
             }
           ],
@@ -484,7 +719,9 @@
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               },
               {
@@ -516,153 +753,230 @@
               "key": "appname",
               "operator": "=~",
               "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
+              "key": "message",
+              "operator": "=~",
+              "value": "/$Query/"
             }
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "syslog count",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 0,
-          "format": "none",
-          "label": "Messages / min",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "columns": [],
-      "datasource": "InfluxDB:Telegraf",
-      "fontSize": "90%",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "PDD5124384626356D"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-purple",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 2
+              },
+              {
+                "color": "dark-orange",
+                "value": 3
+              },
+              {
+                "color": "dark-yellow",
+                "value": 4
+              },
+              {
+                "color": "rgb(150, 150, 150)",
+                "value": 5
+              },
+              {
+                "color": "rgb(51, 51, 51)",
+                "value": 6
+              },
+              {
+                "color": "rgb(5, 5, 5)",
+                "value": 7
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "severity_code"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "text": "Emergency"
+                      },
+                      "1": {
+                        "text": "Alert"
+                      },
+                      "2": {
+                        "text": "Critical"
+                      },
+                      "3": {
+                        "text": "Error"
+                      },
+                      "4": {
+                        "text": "Warning"
+                      },
+                      "5": {
+                        "text": "Notice"
+                      },
+                      "6": {
+                        "text": "Info"
+                      },
+                      "7": {
+                        "text": "Debug"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 119
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 163
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "hostname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 194
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "appname"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 264
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
-        "h": 19,
+        "h": 24,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 7
       },
-      "id": 8,
-      "links": [],
-      "pageSize": 500,
-      "scroll": true,
-      "showHeader": true,
-      "sort": {
-        "col": 0,
-        "desc": true
-      },
-      "styles": [
-        {
-          "alias": "Time",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
+      "id": 12,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        {
-          "alias": "Severity",
-          "colorMode": "cell",
-          "colors": ["#8F3BB8", "#FF780A", "rgba(0, 0, 0, 0)"],
-          "decimals": 0,
-          "mappingType": 1,
-          "pattern": "severity_code",
-          "thresholds": ["2", "4"],
-          "type": "string",
-          "unit": "short",
-          "valueMaps": [
-            {
-              "text": "Emergency",
-              "value": "0"
-            },
-            {
-              "text": "Alert",
-              "value": "1"
-            },
-            {
-              "text": "Critical",
-              "value": "2"
-            },
-            {
-              "text": "Error",
-              "value": "3"
-            },
-            {
-              "text": "Warning",
-              "value": "4"
-            },
-            {
-              "text": "Notice",
-              "value": "5"
-            },
-            {
-              "text": "Info",
-              "value": "6"
-            },
-            {
-              "text": "Debug",
-              "value": "7"
-            }
-          ]
-        }
-      ],
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time"
+          }
+        ]
+      },
+      "pluginVersion": "11.4.0",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "PDD5124384626356D"
+          },
           "groupBy": [
             {
-              "params": ["appname"],
+              "params": [
+                "hostname"
+              ],
               "type": "tag"
             },
             {
-              "params": ["hostname"],
+              "params": [
+                "appname"
+              ],
               "type": "tag"
             }
           ],
           "measurement": "syslog",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT \"severity_code\", \"message\" FROM \"syslog\" WHERE (\"hostname\" =~ /^$hostname$/ AND \"appname\" != 'influxd' AND \"appname\" != 'telegraf' AND \"severity\" =~ /^$severity$/) AND $timeFilter GROUP BY \"appname\", \"hostname\"",
-          "rawQuery": false,
           "refId": "A",
           "resultFormat": "table",
           "select": [
             [
               {
-                "params": ["severity_code"],
+                "params": [
+                  "severity_code"
+                ],
                 "type": "field"
               }
             ],
             [
               {
-                "params": ["message"],
+                "params": [
+                  "message"
+                ],
                 "type": "field"
               }
             ]
@@ -675,217 +989,44 @@
             },
             {
               "condition": "AND",
+              "key": "appname",
+              "operator": "=~",
+              "value": "/^$appname$/"
+            },
+            {
+              "condition": "AND",
               "key": "severity",
               "operator": "=~",
               "value": "/^$severity$/"
             },
             {
               "condition": "AND",
-              "key": "appname",
+              "key": "message",
               "operator": "=~",
-              "value": "/^$appname$/"
+              "value": "/$Query/"
             }
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "syslog messages",
-      "transform": "table",
+      "title": "Syslog Messages",
       "type": "table"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB:Telegraf",
-      "fill": 1,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 25
-      },
-      "hideTimeOverride": false,
-      "id": 4,
-      "interval": "",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": true,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "OUT",
-          "transform": "negative-Y"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "IN",
-          "groupBy": [
-            {
-              "params": ["$__interval"],
-              "type": "time"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "net",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT derivative(mean(\"bytes_recv\"), 1s) *8 AS \"IN\" FROM \"net\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["bytes_recv"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": ["1s"],
-                "type": "derivative"
-              },
-              {
-                "params": ["*8"],
-                "type": "math"
-              },
-              {
-                "params": ["IN"],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "OUT",
-          "groupBy": [
-            {
-              "params": ["$__interval"],
-              "type": "time"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "net",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["bytes_sent"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": ["1s"],
-                "type": "derivative"
-              },
-              {
-                "params": ["*8"],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [
-        {
-          "colorMode": "background6",
-          "fill": true,
-          "fillColor": "rgba(234, 112, 112, 0.12)",
-          "line": false,
-          "lineColor": "rgba(237, 46, 24, 0.60)",
-          "op": "time"
-        }
-      ],
-      "timeShift": null,
-      "title": "Traffic",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "decbits",
-          "label": "Bit / s",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     }
   ],
+  "preload": false,
   "refresh": "5s",
-  "schemaVersion": 18,
-  "style": "dark",
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
       {
-        "allValue": "",
-        "current": {},
-        "datasource": "InfluxDB:Telegraf",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "PDD5124384626356D",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=appname",
-        "hide": 0,
         "includeAll": true,
         "label": "Appname",
         "multi": true,
@@ -894,20 +1035,18 @@
         "query": "SHOW TAG VALUES FROM syslog WITH KEY=appname",
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-        "allValue": "",
-        "current": {},
-        "datasource": "InfluxDB:Telegraf",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "PDD5124384626356D",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=hostname",
-        "hide": 0,
         "includeAll": true,
         "label": "Hostname",
         "multi": true,
@@ -916,20 +1055,18 @@
         "query": "SHOW TAG VALUES FROM syslog WITH KEY=hostname",
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-        "allValue": "",
-        "current": {},
-        "datasource": "InfluxDB:Telegraf",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "PDD5124384626356D",
         "definition": "SHOW TAG VALUES FROM syslog WITH KEY=severity",
-        "hide": 0,
         "includeAll": true,
         "label": "Severity",
         "multi": true,
@@ -938,41 +1075,44 @@
         "query": "SHOW TAG VALUES FROM syslog WITH KEY=severity",
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-        "datasource": "InfluxDB",
-        "filters": [
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "description": "Querystring",
+        "label": "MessageQuery",
+        "name": "Query",
+        "options": [
           {
-            "key": "message",
-            "operator": "=~",
-            "value": "//"
+            "selected": true,
+            "text": "",
+            "value": ""
           }
         ],
-        "hide": 0,
-        "label": "Query",
-        "name": "Query",
-        "skipUrlSync": false,
-        "type": "adhoc"
+        "query": "",
+        "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": ["5s", " 10s", " 30s", " 1m", " 5m"],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "refresh_intervals": [
+      "5s",
+      " 10s",
+      " 30s",
+      " 1m",
+      " 5m"
+    ]
   },
   "timezone": "",
-  "title": "Syslog Dashboard",
-  "uid": "TIYeHqRgz",
-  "version": 13
+  "title": "Syslog",
+  "uid": "TIYeHqRgZ",
+  "version": 1,
+  "weekStart": ""
 }
