@@ -1,10 +1,13 @@
 [Unit]
 Description=test
 After=network-online.target
+Wants=network-online.target
 
 [Service]
 User=agama-client
 ExecStart=/usr/local/bin/agama-client
+Restart=on-failure
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target

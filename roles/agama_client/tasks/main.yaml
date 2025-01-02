@@ -52,3 +52,4 @@
     name: agama-client
     enabled: true
     state: started
+  notify: Reload Systemd
