@@ -17,6 +17,7 @@
     dest: /etc/keepalived/keepalived.conf
   become: true
   notify: Restart keepalived
+  no_log: true
 
 - name: Download Keepalived Exporter
   get_url:

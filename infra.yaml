@@ -1,4 +1,11 @@
 ---
+- name: Always gather facts for all hosts
+  hosts: all
+  gather_facts: yes
+  tags:
+    - always
+  tasks: []
+
 - name: Initial setup
   hosts: all
   roles:

@@ -54,6 +54,12 @@
     - Reload Systemd
     - Restart InfluxDB Stats Exporter
 
+- name: Ensure InfluxDB Stats Exporter is running and enabled
+  ansible.builtin.systemd:
+      name: prometheus-influxdb-stats-exporter
+      state: started
+      enabled: true
+
 - name: Ensure /home/backup/influxdb directory exists
   ansible.builtin.file:
     path: /home/backup/influxdb

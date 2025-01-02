@@ -19,6 +19,7 @@
     owner: root
     group: root
     mode: "0644"
+  no_log: true
 
 # Copy provisioning files
 - name: Copy dashboard provisioning configuration
