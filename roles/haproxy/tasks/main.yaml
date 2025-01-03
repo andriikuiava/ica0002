@@ -58,3 +58,4 @@
     - { name: "lb-1", target: "andriikuiava-1" }
     - { name: "lb-2", target: "andriikuiava-2" }
   notify: restart prometheus-haproxy-exporter
+  no_log: true

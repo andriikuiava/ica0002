@@ -14,6 +14,7 @@
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart Bind9
+  no_log: true
 
 # Create DNS zone file for megacoolproject.io
 - name: Create master zone file
@@ -112,6 +113,7 @@
     record: "backup.{{ domain_name }}."
     type: A
     value: "{{ backup_server_ip }}"
+  no_log: true
 
 
 - name: Add CNAME for Bind9 servers
@@ -128,3 +130,4 @@
     - { name: "ns-1", target: "andriikuiava-1" }
     - { name: "ns-2", target: "andriikuiava-2" }
     - { name: "ns-3", target: "andriikuiava-3" }
+  no_log: true

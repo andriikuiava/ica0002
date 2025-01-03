@@ -57,6 +57,7 @@
     host: "%"
     priv: "{{ mysql_database }}.*:ALL"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
 
 # Install MySQL exporter
 - name: Install MySQL exporter
@@ -72,6 +73,7 @@
     password: "{{ mysql_exporter_password }}"
     priv: "*.*:PROCESS,REPLICATION CLIENT"
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
 
 # Configure MySQL exporter credentials
 - name: Configure MySQL exporter credentials
@@ -159,6 +161,7 @@
     host: '%'
     state: present
   register: mysql_replication_user
+  no_log: true
 
 # Set MySQL read_only mode dynamically
 - name: Set MySQL read_only mode dynamically
@@ -186,6 +189,7 @@
   loop:
     - { name: "db-1", target: "andriikuiava-1" }
     - { name: "db-2", target: "andriikuiava-2" }
+  no_log: true
 
 ## Create override configuration for MySQL exporter
 #- name: Restart MySQL exporter if credentials change

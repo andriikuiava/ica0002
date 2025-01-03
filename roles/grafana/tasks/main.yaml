@@ -74,3 +74,4 @@
     record: "grafana.{{ domain_name }}."
     type: CNAME
     value: "{{ hostvars[groups['grafana_servers'][0]]['ansible_hostname'] }}"
+  no_log: true
