@@ -51,4 +51,4 @@ scrape_configs:
 # Keepalived Exporter
   - job_name: 'keepalived'
     static_configs:
-      - targets: ['andriikuiava-1:9165', 'andriikuiava-2:9165']
+      - targets: ['lb-1.{{ domain_name }}:9165', 'lb-2.{{ domain_name }}:9165']

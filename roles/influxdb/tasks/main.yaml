@@ -80,8 +80,11 @@
   ansible.builtin.copy:
     dest: /etc/cron.d/influxdb-backup
     content: |
-      12 0 * * * backup rm -rf /home/backup/influxdb/*; influxd backup -portable -db telegraf /home/backup/influxdb
-      12 0 * * 0 backup duplicity --no-encryption full /home/backup/influxdb/ rsync://andriikuiava@{{ backup_domain }}/influxdb
+      # Remove old backups and create new daily at 4:00 AM
+      {{ influxdb_backup_schedule }} backup rm -rf /home/backup/influxdb/*; influxd backup -portable -db telegraf /home/backup/influxdb
+
+      # Perform full backup weekly on Sunday at 4:30 AM
+      {{ influxdb_full_backup_schedule }} backup duplicity --no-encryption full /home/backup/influxdb/ rsync://andriikuiava@{{ backup_domain }}/influxdb
     owner: root
     group: root
     mode: '0644'

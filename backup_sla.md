@@ -15,28 +15,32 @@ Services that are backed up:
 ## Schedule
 
 - **MySQL**:
-    - **Full backup** every **Sunday** at **00:12 UTC**.
-    - **Incremental backups** from **Monday to Saturday** at **00:12 UTC**.
+  - **Daily backup** every day at 2:30 AM
+  - **Full backup** every Sunday at 3:15 AM
+  - **Incremental backups** from Monday to Saturday at 3:15 AM
 
 - **InfluxDB**:
-    - **Full backup** every day at **00:12 UTC**.
-    - **Incremental backups** every **Sunday** at **00:12 UTC**.
+  - **Daily backup** every day at 4:00 AM
+  - **Full backup** every Sunday at 4:30 AM
 
 - **Ansible Git repository**:
-    - Backups are created in **real-time** and mirrored automatically to the internal Git server.
+  - Backups are created in **real-time** and mirrored automatically to the internal Git server.
+
 
 ## Retention
 
 - **MySQL**:
-    - **3 full backup versions** and **1 incremental backup version** stored.
-    - Retention period: **40 days**.
+  - **3 full backup versions** and **6 incremental backup versions** stored (one for each weekday).
+  - Retention period: **40 days**.
 
 - **InfluxDB**:
-    - **2 full backup versions** and **2 incremental backup versions** stored.
-    - Retention period: **40 days**.
+  - **3 full backup versions** stored.
+  - Retention period: **40 days**.
 
 - **Ansible Git repository**:
-    - Backups are stored for **6 months** with **40 versions** available.
+  - Backups are stored for **6 months** with **40 versions** available.
+
+
 
 ## Usability Checks
 

@@ -47,9 +47,13 @@ mysql_backup_password: !vault |
   3036663634666137310a316239646437353339346439646233656436396135616636336133326565
   33386538343466366565353261353533303737346662326436643439313862356631396262313766
   6162623832383533346663353938366637366133636661316136
-mysql_backup_schedule: "12 0 * * *"
-incremental_backup_schedule: "12 0 * * 1-6"
-full_backup_schedule: "12 0 * * 0"
+mysql_backup_schedule: "30 2 * * *"
+full_backup_schedule: "15 3 * * 0"
+incremental_backup_schedule: "15 3 * * 1-6"
+
+influxdb_backup_schedule: "00 4 * * *"
+influxdb_full_backup_schedule: "30 4 * * 0"
+
 replication_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   36323235663432613836313032666462353931353836613339346134366562333562636436383636
@@ -65,7 +69,6 @@ num_containers_per_machine: 2
 agama_start_port: 8001
 agama_docker_port: 8000
 virtual_router_id: 51
-priority: "{{ '200' if inventory_hostname == 'andriikuiava-1' else '100' }}"
 virtual_ip: "{{ hostvars['andriikuiava-1']['ansible_default_ipv4']['address'] | ipaddr('replace', '42', '100') }}"
 peer_ip: "{{ hostvars['andriikuiava-2']['ansible_default_ipv4']['address'] }}"
 auth_pass_keepalived: !vault |

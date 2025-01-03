@@ -87,13 +87,6 @@
     group: backup
     mode: '0644'
 
-# Ensure backup user can access backup server without prompts
-- name: Ensure backup user can access backup server without prompts
-  ansible.builtin.command:
-    cmd: ssh-keyscan -t ed25519 {{ backup_server_ip }}
-  register: ssh_keyscan_result
-  changed_when: false
-
 # Add backup server to known_hosts
 - name: Add backup server to known_hosts
   ansible.builtin.template:

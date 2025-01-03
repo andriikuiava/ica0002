@@ -25,6 +25,7 @@
   ansible.builtin.service:
     name: prometheus.service
     state: started
+    enabled: true
 
 - name: Install Nginx
   ansible.builtin.apt:

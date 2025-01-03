@@ -89,6 +89,13 @@
   notify: Restart MySQL Exporter
   no_log: true
 
+#Ensure mysqld_exporter service is running and enabled
+- name: Ensure mysqld_exporter service is running
+  ansible.builtin.service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: true
+
 # Ensure /home/backup/mysql directory exists
 - name: Ensure /home/backup/mysql directory exists
   ansible.builtin.file:
@@ -102,7 +109,7 @@
 - name: Create MySQL backup user
   community.mysql.mysql_user:
     name: backup
-    host: '%'
+    host: "localhost"
     password: "{{ mysql_backup_password }}"
     priv: "agama.*:LOCK TABLES,SELECT"
     login_unix_socket: /var/run/mysqld/mysqld.sock
@@ -141,9 +148,15 @@
     content: |
       {% if inventory_hostname == mysql_backup_host %}
       PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+      
+      # Perform daily MySQL database dump at 2:30 AM
       {{ mysql_backup_schedule }} backup mysqldump agama > /home/backup/mysql/agama.sql
-      {{ full_backup_schedule }}  backup  duplicity --no-encryption full /home/backup/mysql/ rsync://andriikuiava@{{ backup_domain }}/mysql
-      {{ incremental_backup_schedule }}  backup  duplicity --no-encryption incremental /home/backup/mysql/ rsync://andriikuiava@{{ backup_domain }}/mysql
+
+      # Perform full backup on Sundays at 3:15 AM
+      {{ full_backup_schedule }} backup duplicity --no-encryption full /home/backup/mysql/ rsync://andriikuiava@{{ backup_domain }}/mysql
+
+      # Perform incremental backups Monday to Saturday at 3:15 AM
+      {{ incremental_backup_schedule }} backup duplicity --no-encryption incremental /home/backup/mysql/ rsync://andriikuiava@{{ backup_domain }}/mysql
       {% endif %}
     dest: /etc/cron.d/mysql-backup
     owner: root

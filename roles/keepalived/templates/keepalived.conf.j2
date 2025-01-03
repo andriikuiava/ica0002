@@ -12,10 +12,10 @@ vrrp_script check_haproxy {
 }
 
 vrrp_instance VI_1 {
-        state MASTER
+        state {{ 'MASTER' if inventory_hostname == 'andriikuiava-1' else 'BACKUP' }}
         interface ens3
         virtual_router_id 51
-        priority {{ priority }}
+        priority {{ '100' if inventory_hostname == 'andriikuiava-1' else '90' }}
         preempt
         advert_int 1
         authentication {
