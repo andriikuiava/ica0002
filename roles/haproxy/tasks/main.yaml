@@ -26,7 +26,7 @@
   ansible.builtin.lineinfile:
     path: /etc/default/prometheus-haproxy-exporter
     regexp: '^ARGS='
-    line: 'ARGS="--haproxy.scrape-uri=http://127.0.0.1:9188/metrics;csv"'
+    line: 'ARGS="--haproxy.scrape-uri=http://localhost:9188/metrics;csv"'
     owner: root
     group: root
     mode: '0644'

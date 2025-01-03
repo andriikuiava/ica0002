@@ -422,7 +422,7 @@
             "type": "influxdb",
             "uid": "P232F78820213A885"
           },
-          "query": "SELECT COUNT(\"items\") FROM \"agama-stats\" WHERE $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT SUM(\"items\") FROM \"agama-stats\" WHERE $timeFilter GROUP BY time(5m) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"

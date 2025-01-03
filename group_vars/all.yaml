@@ -1,4 +1,4 @@
-mysql_host: andriikuiava-2
+mysql_host: andriikuiava-1
 mysql_database: agama
 mysql_user: agama
 agama_port: 8000
