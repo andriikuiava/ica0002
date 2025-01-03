@@ -1001,7 +1001,21 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 1,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "index": 0,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "max": 1,
           "min": 0,
           "thresholds": {
@@ -1070,6 +1084,6 @@
   "timezone": "browser",
   "title": "Main Dashboard",
   "uid": "be4wy8vzhdmgwa",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
