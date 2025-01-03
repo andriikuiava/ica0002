@@ -1,17 +1,12 @@
 ---
-- name: Always gather facts for all hosts
-  hosts: all
-  gather_facts: yes
-  tags:
-    - always
-  tasks: []
-
 - name: Initial setup
   hosts: all
+  gather_facts: yes
   roles:
     - init
   tags:
     - init
+    - always
 
 - name: DNS Servers
   hosts: dns_servers:children
