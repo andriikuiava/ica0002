@@ -35,7 +35,7 @@
     name: "agama{{ item }}"
     image: agama
     env:
-      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@db-1.megacoolproject.io/{{ mysql_database }}"
+      AGAMA_DATABASE_URI: "mysql+pymysql://{{ mysql_user }}:{{ mysql_password }}@{{ mysql_host }}/{{ mysql_database }}"
     ports:
       - "{{ agama_start_port + (item - 1) }}:{{ agama_docker_port }}"
     restart_policy: always

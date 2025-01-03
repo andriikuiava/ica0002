@@ -33,6 +33,7 @@
     - mysql
   tags:
     - mysql
+    - switchover
 
 - name: Prometheus Servers
   hosts: prometheus_servers
@@ -58,7 +59,9 @@
   hosts: agama_servers
   roles:
     - agama
-  tags: agama
+  tags:
+    - agama
+    - switchover
 
 - name: Agama client tasks
   hosts: agama_clients
