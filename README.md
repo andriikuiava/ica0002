@@ -1,2 +1,2 @@
 # ica0002
-aaa
+A repo for TalTech IT Infrastructures Services course.
